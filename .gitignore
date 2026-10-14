@@ -269,3 +269,8 @@ __pycache__/
 # the correct output, but it must not be committed into source control.
 # The incorrectly named file is excluded from the build.
 /dnGREP.Localization/Properties/Resources.ca-ES-valencia.resx
+
+# later additions for dlGrep
+images/
+testing/
+testing_ref/

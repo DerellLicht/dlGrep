@@ -235,8 +235,10 @@ namespace dnGREP.WPF
                 Run run = new(MarkWhitespace(text[start..end], ref column));
                 if (span.Kind == ReplaceLogSpanKind.Skipped)
                 {
-                    run.SetResourceReference(Run.ForegroundProperty, "Match.Skip.Foreground");
-                    run.SetResourceReference(Run.BackgroundProperty, "Match.Skip.Background");
+                    // a match that was found but left alone keeps the ordinary match colors; the
+                    // Match.Skip brushes are the same color as the deleted text in some themes
+                    run.SetResourceReference(Run.ForegroundProperty, "Match.Highlight.Foreground");
+                    run.SetResourceReference(Run.BackgroundProperty, "Match.Highlight.Background");
                 }
                 else if (line.LogKind == ReplaceLogLineKind.New)
                 {

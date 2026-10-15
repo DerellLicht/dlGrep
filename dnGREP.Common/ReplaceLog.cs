@@ -139,8 +139,9 @@ namespace dnGREP.Common
     public class ReplaceLogEntry
     {
         public ReplaceLogEntry(int lineNumber, IReadOnlyList<ReplaceLogLine> oldLines,
-            IReadOnlyList<ReplaceLogLine> newLines, int replacementCount, string? note = null)
+            IReadOnlyList<ReplaceLogLine> newLines, int replacementCount, string? note = null, int skippedCount = 0)
         {
+            SkippedCount = skippedCount;
             LineNumber = lineNumber;
             OldLines = oldLines;
             NewLines = newLines;
@@ -169,6 +170,11 @@ namespace dnGREP.Common
         /// The number of matches on the line that are marked for replacement.
         /// </summary>
         public int ReplacementCount { get; }
+
+        /// <summary>
+        /// The number of matches on the line that are not replaced.
+        /// </summary>
+        public int SkippedCount { get; }
 
         /// <summary>
         /// True if at least one match on the line is replaced.
@@ -207,6 +213,11 @@ namespace dnGREP.Common
         /// Total matches replaced in the file.
         /// </summary>
         public int ReplacementCount => Entries.Sum(e => e.ReplacementCount);
+
+        /// <summary>
+        /// Total matches left alone on the lines shown in the log.
+        /// </summary>
+        public int SkippedCount => Entries.Sum(e => e.SkippedCount);
 
         /// <summary>
         /// Number of lines with at least one replacement.

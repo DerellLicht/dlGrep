@@ -3141,6 +3141,15 @@ namespace dnGREP.Localization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} replacements on {1} lines; {2} skipped.
+        /// </summary>
+        public static string Main_ReplaceLog_CountReplacementsSkipped {
+            get {
+                return ResourceManager.GetString("Main_ReplaceLog_CountReplacementsSkipped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to replacement skipped.
         /// </summary>
         public static string Main_ReplaceLog_ReplacementSkipped {

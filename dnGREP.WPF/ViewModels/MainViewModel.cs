@@ -2161,6 +2161,9 @@ namespace dnGREP.WPF
                     dlg.ViewModel.SearchFor = SearchFor;
                     dlg.ViewModel.ReplaceWith = ReplaceWith;
 
+                    // owned by the main window, so the two come to the front together
+                    dlg.Owner = ParentWindow;
+
                     // the replacement log is built live in the Results pane as decisions are made;
                     // hook up before the results are assigned so the first selection is seen
                     ReplaceLogSession logSession = new(ResultsViewModel, replaceList, SearchFor, ReplaceWith,
@@ -2181,8 +2184,14 @@ namespace dnGREP.WPF
                     else
                     {
                         // Cancel, Escape or closing the window: nothing is written, so
-                        // put back the search results the log replaced
+                        // put back the search results the log replaced, and clear the marks
+                        // so the next Replace starts fresh instead of showing stale decisions
                         ResultsViewModel.EndLog(true);
+                        foreach (GrepSearchResult gsr in replaceList) {
+                            foreach (GrepMatch match in gsr.Matches) {
+                                match.ReplaceMatch = false;
+                            }
+                        }
                     }
                 }
 

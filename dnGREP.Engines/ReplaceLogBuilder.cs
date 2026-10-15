@@ -130,7 +130,7 @@ namespace dnGREP.Engines
             List<ReplaceLogLine> oldLines = ReplaceLogLine.Split(line, oldSpans, lineNumber);
 
             if (marked.Count == 0) {
-                return new ReplaceLogEntry(lineNumber, oldLines, [], 0);
+                return new ReplaceLogEntry(lineNumber, oldLines, [], 0, null, local.Count);
             }
 
             // the new length of each replaced match comes from a run with only that match marked
@@ -158,7 +158,7 @@ namespace dnGREP.Engines
             }
 
             List<ReplaceLogLine> newLines = ReplaceLogLine.Split(newText, newSpans, lineNumber);
-            return new ReplaceLogEntry(lineNumber, oldLines, newLines, marked.Count, guidNote);
+            return new ReplaceLogEntry(lineNumber, oldLines, newLines, marked.Count, guidNote, local.Count - marked.Count);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace dnGREP.Engines
                 }
 
                 file.Entries.Add(new ReplaceLogEntry(first + 1, oldLines, [], m.ReplaceMatch ? 1 : 0,
-                    m.ReplaceMatch ? NoteNotShown : null));
+                    m.ReplaceMatch ? NoteNotShown : null, m.ReplaceMatch ? 0 : 1));
             }
         }
 

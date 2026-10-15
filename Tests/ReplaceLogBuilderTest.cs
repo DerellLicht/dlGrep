@@ -126,6 +126,7 @@ namespace Tests
 
             ReplaceLogEntry entry = Assert.Single(log.Entries);
             Assert.Equal(2, entry.ReplacementCount);
+            Assert.Equal(1, entry.SkippedCount);
             ReplaceLogLine newLine = Assert.Single(entry.NewLines);
             Assert.Equal("quux! bar foo baz quux!", newLine.Text);
             Assert.Equal(3, newLine.Spans.Count);

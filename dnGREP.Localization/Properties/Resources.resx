@@ -1175,6 +1175,10 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <value>{0} replacements on {1} lines</value>
     <comment>Main window, replacement log header: {0} is the number of replacements in the file; {1} is the number of lines changed</comment>
   </data>
+  <data name="Main_ReplaceLog_CountReplacementsSkipped" xml:space="preserve">
+    <value>{0} replacements on {1} lines; {2} skipped</value>
+    <comment>Main window, replacement log header: {0} is the number of replacements in the file; {1} is the number of lines changed; {2} is the number of matches left alone</comment>
+  </data>
   <data name="Main_ReplaceLog_ReplacementSkipped" xml:space="preserve">
     <value>replacement skipped</value>
     <comment>Main window, replacement log: shown under a line whose matches were not replaced</comment>

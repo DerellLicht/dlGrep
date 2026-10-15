@@ -33,8 +33,11 @@ namespace dnGREP.WPF.MVHelpers
 
             GrepSearchResult result = new(log.FileName, searchPattern, matches, Encoding.UTF8)
             {
-                LogSummary = TranslationSource.Format(Resources.Main_ReplaceLog_CountReplacements,
-                    log.ReplacementCount, log.ReplacedLineCount)
+                LogSummary = log.SkippedCount > 0 ?
+                    TranslationSource.Format(Resources.Main_ReplaceLog_CountReplacementsSkipped,
+                        log.ReplacementCount, log.ReplacedLineCount, log.SkippedCount) :
+                    TranslationSource.Format(Resources.Main_ReplaceLog_CountReplacements,
+                        log.ReplacementCount, log.ReplacedLineCount)
             };
 
             List<GrepLine> lines = [];

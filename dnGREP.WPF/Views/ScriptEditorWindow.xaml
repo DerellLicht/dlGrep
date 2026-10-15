@@ -13,7 +13,7 @@
                  FontSize="{Binding MainFormFontSize}"
                  Height="740"
                  Width="700"
-                 Icon="/dnGREP;component/nGREP.ico"
+                 Icon="/dlGrep;component/nGREP.ico"
                  ResizeMode="CanResize"
                  WindowStartupLocation="CenterOwner"
                  FocusManager.FocusedElement="{Binding ElementName=textEditor}"

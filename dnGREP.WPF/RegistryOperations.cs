@@ -12,8 +12,8 @@ namespace dnGREP.WPF
 {
     public static class RegistryOperations
     {
-        private static readonly string SHELL_KEY_NAME = "dnGREP";
-        private static readonly string SHELL_MENU_TEXT = "dnGrep...";
+        private static readonly string SHELL_KEY_NAME = "dlGrep";
+        private static readonly string SHELL_MENU_TEXT = "dlGrep...";
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public static bool IsShellRegistered(string location)

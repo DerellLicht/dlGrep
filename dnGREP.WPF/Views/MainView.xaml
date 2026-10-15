@@ -22,7 +22,7 @@
                  SnapsToDevicePixels="True"
                  Background="{DynamicResource Window.Background}"
                  CaptionBackground="{DynamicResource Caption.Background}"
-                 Icon="/dnGREP;component/nGREP.ico"
+                 Icon="/dlGrep;component/nGREP.ico"
                  WindowState="Normal"
                  WindowStartupLocation="Manual"
                  ResizeMode="CanResize"
@@ -260,7 +260,7 @@
                 <StatusBarItem DockPanel.Dock="Left">
                     <Border Background="#D0ffff00" CornerRadius="4"
                         Visibility="{Binding ResultsViewModel.HasFailures, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Image Source="/dnGREP;component/Images/ExclamationPoint.png" Stretch="Uniform" Width="28" Height="20"
+                        <Image Source="/dlGrep;component/Images/ExclamationPoint.png" Stretch="Uniform" Width="28" Height="20"
                            ToolTip="{Binding ResultsViewModel.FileReadErrors}"/>
                     </Border>
                 </StatusBarItem>

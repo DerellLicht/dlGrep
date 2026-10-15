@@ -66,7 +66,7 @@ namespace dnGREP.WPF
                 {
                     try
                     {
-                        Uri iconUri = new("pack://application:,,,/dnGrep;component/nGREP.ico");
+                        Uri iconUri = new("pack://application:,,,/dlGrep;component/nGREP.ico");
                         StreamResourceInfo? resourceInfo = Application.GetResourceStream(iconUri);
 
                         if (resourceInfo?.Stream != null)

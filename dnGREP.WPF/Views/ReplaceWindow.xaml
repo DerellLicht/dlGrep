@@ -12,7 +12,7 @@
                  FlowDirection="{Binding CultureFlowDirection}"
                  FontFamily="{Binding ApplicationFontFamily}"
                  FontSize="{Binding ReplaceFormFontSize}"
-                 Icon="/dnGREP;component/nGREP.ico"
+                 Icon="/dlGrep;component/nGREP.ico"
                  Background="{DynamicResource Dialog.Background}"
                  CaptionBackground="{DynamicResource Caption.Dialog.Background}"
                  FocusManager.FocusedElement="{Binding ElementName=btnCancel}"

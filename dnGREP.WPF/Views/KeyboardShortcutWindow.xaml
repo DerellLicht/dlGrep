@@ -18,7 +18,7 @@
                  my:ChromeButtonExtension.ButtonVisibility="MinimizeHidden"
                  Background="{DynamicResource Dialog.Background}"
                  CaptionBackground="{DynamicResource Caption.Dialog.Background}"
-                 Icon="/dnGREP;component/nGREP.ico"
+                 Icon="/dlGrep;component/nGREP.ico"
                  WindowStartupLocation="CenterOwner">
 
     <Window.Resources>

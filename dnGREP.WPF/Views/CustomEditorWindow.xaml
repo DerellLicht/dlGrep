@@ -15,7 +15,7 @@
                  ResizeMode="NoResize"
                  MinWidth="500"
                  ShowInTaskbar="True"
-                 Icon="/dnGREP;component/nGREP.ico"
+                 Icon="/dlGrep;component/nGREP.ico"
                  Background="{DynamicResource Dialog.Background}"
                  CaptionBackground="{DynamicResource Caption.Dialog.Background}">
 

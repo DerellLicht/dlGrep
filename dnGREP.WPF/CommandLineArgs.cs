@@ -14,7 +14,7 @@ namespace dnGREP.WPF
 {
     public partial class CommandLineArgs
     {
-        private const string appName = "dnGREP.exe";
+        private const string appName = "dlGrep.exe";
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public CommandLineArgs(string commandLine)

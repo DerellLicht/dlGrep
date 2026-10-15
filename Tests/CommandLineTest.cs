@@ -101,7 +101,7 @@ namespace Tests
             // index is used to identify the test case
             Assert.True(index > 0);
 
-            string program = @"""C:\\Program Files\\dnGREP\\dnGREP.exe""";
+            string program = @"""C:\\Program Files\\dlGrep\\dlGrep.exe""";
 
             CommandLineArgs args = new(program + commandLine);
 
@@ -173,7 +173,7 @@ namespace Tests
             // index is used to identify the test case
             Assert.True(index > 0);
 
-            string program = @"""C:\\Program Files\\dnGREP\\dnGREP.exe""";
+            string program = @"""C:\\Program Files\\dlGrep\\dlGrep.exe""";
 
             CommandLineArgs args = new(program + commandLine);
 

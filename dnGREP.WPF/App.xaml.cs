@@ -32,10 +32,10 @@ namespace dnGREP.WPF
         public static readonly Messenger Messenger = new();
 
         /// <summary>The pipe name.</summary>
-        private const string UniquePipeName = "{C5475DAC-0582-42DE-B2B8-C17DFF29988A}";
+        private const string UniquePipeName = "{AAA8D31B-2027-4C05-850B-055736842693}";
 
         /// <summary>The unique mutex name.</summary>
-        private const string UniqueMutexName = "{EB56AF15-5E08-4EEF-B8C4-18749C927C78}";
+        private const string UniqueMutexName = "{2B75CADB-F78D-4EA4-8452-077B3B5BC94A}";
 
         private static Mutex? singletonMutex;
 

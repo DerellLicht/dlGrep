@@ -9,7 +9,7 @@
                  FlowDirection="{Binding CultureFlowDirection}"
                  FontFamily="{Binding ApplicationFontFamily}"
                  FontSize="{Binding DialogFontSize}"
-                 Icon="/dnGREP;component/nGREP.ico"
+                 Icon="/dlGrep;component/nGREP.ico"
                  ResizeMode="NoResize"
                  Width="{Binding DialogWidth, Mode=TwoWay, FallbackValue=300}"
                  MinHeight="100"

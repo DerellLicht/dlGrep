@@ -680,7 +680,7 @@ namespace dnGREP.WPF
 
             string color = darkColor ? "Dark" : "Light";
             int intValue = (int)value;
-            SwapButtonImagePath = $@"pack://application:,,,/dnGREP;component/Images/swap{color}{intValue}.png";
+            SwapButtonImagePath = $@"pack://application:,,,/dlGrep;component/Images/swap{color}{intValue}.png";
 
             SwapButtonToolTip = value switch
             {
@@ -691,7 +691,7 @@ namespace dnGREP.WPF
         }
 
         [ObservableProperty]
-        private string swapButtonImagePath = $"pack://application:,,,/dnGREP;component/Images/swapLight0.png";
+        private string swapButtonImagePath = $"pack://application:,,,/dlGrep;component/Images/swapLight0.png";
 
         [ObservableProperty]
         private string swapButtonToolTip = string.Empty;

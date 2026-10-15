@@ -97,7 +97,7 @@
                        HorizontalAlignment="Center"
                        Margin="16,27,0,27"
                        Width="32" Height="32"/>
-                <!--Source="/dnGREP;component/Images/dnGrep96.png"-->
+                <!--Source="/dlGrep;component/Images/dnGrep96.png"-->
 
                 <TextBlock x:Name="mbText"
                            VerticalAlignment="Center"

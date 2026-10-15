@@ -422,6 +422,18 @@ namespace dnGREP.WPF
             }
         }
 
+        /// <summary>
+        /// Puts the Results pane back to its size from before the log was shown, and stops
+        /// tracking it, so later changes of the log do not touch the user's own maximize choice.
+        /// </summary>
+        private void RestoreMaximizedState()
+        {
+            if (logForcedMaximize) {
+                logForcedMaximize = false;
+                IsResultTreeMaximized = maximizedBeforeLog;
+            }
+        }
+
         public Window? ParentWindow { get; set; }
 
         public MainForm? MainForm => ParentWindow as MainForm;
@@ -2211,6 +2223,11 @@ namespace dnGREP.WPF
 
                     dlg.ViewModel.ReplaceMatch -= logSession.OnReplaceMatch;
                     dlg.ViewModel.PropertyChanged -= logSession.OnViewModelPropertyChanged;
+
+                    // the Replace window is closed: give the window back its search controls.
+                    // After OK the log stays in the Results pane, at normal size (the maximize
+                    // button still works); after Cancel the search results are restored below
+                    RestoreMaximizedState();
 
                     if (result.HasValue && result.Value)
                     {

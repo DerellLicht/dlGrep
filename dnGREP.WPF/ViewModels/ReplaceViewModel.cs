@@ -863,9 +863,9 @@ namespace dnGREP.WPF
             {
                 if (!string.IsNullOrEmpty(NextMatchCommand.KeyGestureText))
                 {
-                    return $"{Resources.Replace_MoveToThePreviousMatchInThisFile} ({NextMatchCommand.KeyGestureText})";
+                    return $"{Resources.Replace_MoveToTheNextMatchInThisFile} ({NextMatchCommand.KeyGestureText})";
                 }
-                return Resources.Replace_MoveToThePreviousMatchInThisFile;
+                return Resources.Replace_MoveToTheNextMatchInThisFile;
             }
         }
 

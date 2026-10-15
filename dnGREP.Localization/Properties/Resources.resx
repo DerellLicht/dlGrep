@@ -2444,8 +2444,8 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Replace window, Previous button tooltip</comment>
   </data>
   <data name="Replace_Next" xml:space="preserve">
-    <value>_Next</value>
-    <comment>Replace window, Next button label (accel)</comment>
+    <value>_Skip</value>
+    <comment>Replace window, Skip button label (accel): leaves the current match unchanged and moves to the next match</comment>
   </data>
   <data name="Replace_NextFile" xml:space="preserve">
     <value>Next _file</value>

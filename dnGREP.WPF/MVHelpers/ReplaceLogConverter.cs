@@ -15,8 +15,9 @@ namespace dnGREP.WPF.MVHelpers
     {
         /// <summary>
         /// Converts the log of one file.
-        /// For each entry the old line(s) come first, then the new line(s); an entry with no
-        /// replacement gets a "replacement skipped" note line instead of new lines.
+        /// For each entry the old line(s) come first, then the new line(s).  An entry with no
+        /// replacement shows the unchanged line again as the new line, with its matches in the
+        /// skip colors, so skipped lines look like partly skipped ones.
         /// </summary>
         /// <param name="log">the log for one file</param>
         /// <param name="searchPattern">the search pattern, stored on the synthetic matches</param>
@@ -53,16 +54,9 @@ namespace dnGREP.WPF.MVHelpers
                     lines.Add(MakeLine(old, ReplaceLogLineKind.Old));
                 }
 
-                if (entry.IsReplaced)
+                foreach (ReplaceLogLine added in entry.IsReplaced ? entry.NewLines : entry.OldLines)
                 {
-                    foreach (ReplaceLogLine added in entry.NewLines)
-                    {
-                        lines.Add(MakeLine(added, ReplaceLogLineKind.New));
-                    }
-                }
-                else
-                {
-                    lines.Add(NoteLine(Resources.Main_ReplaceLog_ReplacementSkipped));
+                    lines.Add(MakeLine(added, ReplaceLogLineKind.New));
                 }
 
                 if (entry.Note != null)

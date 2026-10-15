@@ -114,6 +114,8 @@ namespace dnGREP.WPF
         public MainViewModel()
             : base()
         {
+            ResultsViewModel.PropertyChanged += ResultsViewModel_PropertyChanged;
+
             if (Application.Current != null)
             {
                 double maxPreviewWidth = Application.Current.MainWindow.Width - DockPanelSplitter.Panel1MinSize;
@@ -391,6 +393,34 @@ namespace dnGREP.WPF
         #endregion
 
         #region Properties
+
+        // the Results pane is maximized while it holds a replacement log; the previous state is restored after
+        private bool maximizedBeforeLog;
+        private bool logForcedMaximize;
+
+        /// <summary>
+        /// Maximizes the Results pane when a replacement log appears in it (so the log has the whole window
+        /// and the search controls are out of the way), and restores the previous state when the log ends:
+        /// Cancel, a new search, or Undo.
+        /// </summary>
+        private void ResultsViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(GrepSearchResultsViewModel.IsLogDisplayed)) {
+                return;
+            }
+
+            if (ResultsViewModel.IsLogDisplayed) {
+                if (!logForcedMaximize) {
+                    maximizedBeforeLog = IsResultTreeMaximized;
+                    logForcedMaximize = true;
+                    IsResultTreeMaximized = true;
+                }
+            }
+            else if (logForcedMaximize) {
+                logForcedMaximize = false;
+                IsResultTreeMaximized = maximizedBeforeLog;
+            }
+        }
 
         public Window? ParentWindow { get; set; }
 

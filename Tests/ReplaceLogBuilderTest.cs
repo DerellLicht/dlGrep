@@ -52,7 +52,7 @@ namespace Tests
         [Fact]
         public void SplitHandlesLineEndingsAndSpans()
         {
-            var spans = new[] { new ReplaceLogSpan(1, 5, ReplaceLogSpanKind.Replaced) };
+            var spans = new[] { new ReplaceLogSpan(1, 4, ReplaceLogSpanKind.Replaced) };
 
             // span "b\r\nc" crosses a line break and is clipped to each side
             List<ReplaceLogLine> lines = ReplaceLogLine.Split("ab\r\ncd\n", spans, 7);

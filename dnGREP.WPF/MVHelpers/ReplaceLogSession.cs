@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using dnGREP.Common;
 using dnGREP.Engines;
+using dnGREP.Localization;
+using dnGREP.Localization.Properties;
 using NLog;
 
 namespace dnGREP.WPF.MVHelpers
@@ -16,7 +18,8 @@ namespace dnGREP.WPF.MVHelpers
     /// every change, which keeps it simple and always consistent with the marks.
     /// </summary>
     internal class ReplaceLogSession(GrepSearchResultsViewModel resultsViewModel, List<GrepSearchResult> files,
-        string searchFor, string replaceWith, SearchType searchType, GrepSearchOption searchOptions)
+        string searchFor, string replaceWith, SearchType searchType, GrepSearchOption searchOptions,
+        Action<string> showStatus)
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -95,6 +98,11 @@ namespace dnGREP.WPF.MVHelpers
 
             if (logs.Count > 0) {
                 resultsViewModel.ShowLog(logs, searchFor);
+
+                // totals for the whole log go to the status bar: there is room for them there
+                showStatus(TranslationSource.Format(Resources.Main_ReplaceLog_StatusSummary,
+                    logs.Sum(l => l.ReplacementCount), logs.Sum(l => l.SkippedCount),
+                    logs.Sum(l => l.Entries.Count), logs.Count));
             }
         }
 

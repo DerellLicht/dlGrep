@@ -3150,6 +3150,15 @@ namespace dnGREP.Localization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Replace log: {0} replacements, {1} skipped, on {2} lines in {3} files.
+        /// </summary>
+        public static string Main_ReplaceLog_StatusSummary {
+            get {
+                return ResourceManager.GetString("Main_ReplaceLog_StatusSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Replace Log.
         /// </summary>
         public static string Main_ReplaceLog_Title {

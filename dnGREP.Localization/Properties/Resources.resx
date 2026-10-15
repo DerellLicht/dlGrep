@@ -1172,12 +1172,16 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Main window, search results text: {0} is the partial path and file name; {1} is the number of matches in the file; {2} is the number of lines with matches</comment>
   </data>
   <data name="Main_ReplaceLog_CountReplacements" xml:space="preserve">
-    <value>{0} replacements on {1} lines</value>
-    <comment>Main window, replacement log header: {0} is the number of replacements in the file; {1} is the number of lines changed</comment>
+    <value>{0} replaced</value>
+    <comment>Main window, replacement log file header (kept short so it fits the column): {0} is the number of replacements in the file</comment>
   </data>
   <data name="Main_ReplaceLog_CountReplacementsSkipped" xml:space="preserve">
-    <value>{0} replacements on {1} lines; {2} skipped</value>
-    <comment>Main window, replacement log header: {0} is the number of replacements in the file; {1} is the number of lines changed; {2} is the number of matches left alone</comment>
+    <value>{0} replaced, {1} skipped</value>
+    <comment>Main window, replacement log file header (kept short so it fits the column): {0} is the number of replacements in the file; {1} is the number of matches left alone</comment>
+  </data>
+  <data name="Main_ReplaceLog_StatusSummary" xml:space="preserve">
+    <value>Replace log: {0} replacements, {1} skipped, on {2} lines in {3} files</value>
+    <comment>Main window status bar while the replacement log is shown: {0} is the number of replacements; {1} is the number of matches left alone; {2} is the number of lines shown; {3} is the number of files</comment>
   </data>
   <data name="Main_ReplaceLog_Title" xml:space="preserve">
     <value>Replace Log</value>

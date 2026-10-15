@@ -36,9 +36,9 @@ namespace dnGREP.WPF.MVHelpers
             {
                 LogSummary = log.SkippedCount > 0 ?
                     TranslationSource.Format(Resources.Main_ReplaceLog_CountReplacementsSkipped,
-                        log.ReplacementCount, log.ReplacedLineCount, log.SkippedCount) :
+                        log.ReplacementCount, log.SkippedCount) :
                     TranslationSource.Format(Resources.Main_ReplaceLog_CountReplacements,
-                        log.ReplacementCount, log.ReplacedLineCount)
+                        log.ReplacementCount)
             };
 
             List<GrepLine> lines = [];

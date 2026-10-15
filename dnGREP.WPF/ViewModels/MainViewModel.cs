@@ -2208,8 +2208,9 @@ namespace dnGREP.WPF
 
                     // the replacement log is built live in the Results pane as decisions are made;
                     // hook up before the results are assigned so the first selection is seen
+                    string statusBeforeLog = StatusMessage;
                     ReplaceLogSession logSession = new(ResultsViewModel, replaceList, SearchFor, ReplaceWith,
-                        TypeOfSearch, SearchOptions);
+                        TypeOfSearch, SearchOptions, text => StatusMessage = text);
                     dlg.ViewModel.ReplaceMatch += logSession.OnReplaceMatch;
                     dlg.ViewModel.PropertyChanged += logSession.OnViewModelPropertyChanged;
 
@@ -2239,6 +2240,7 @@ namespace dnGREP.WPF
                         // put back the search results the log replaced, and clear the marks
                         // so the next Replace starts fresh instead of showing stale decisions
                         ResultsViewModel.EndLog(true);
+                        StatusMessage = statusBeforeLog;
                         foreach (GrepSearchResult gsr in replaceList) {
                             foreach (GrepMatch match in gsr.Matches) {
                                 match.ReplaceMatch = false;

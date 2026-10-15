@@ -45,7 +45,7 @@ namespace dnGREP.WPF
             KeyBindingManager.RegisterCommand(KeyCategory.Replace, nameof(ReplaceAllCommand), "Replace_Continue", "F10");
             KeyBindingManager.RegisterCommand(KeyCategory.Replace, nameof(PrevFileCommand), "Replace_PreviousFile", "Control+PageUp");
             KeyBindingManager.RegisterCommand(KeyCategory.Replace, nameof(NextFileCommand), "Replace_NextFile", "Control+PageDown");
-            KeyBindingManager.RegisterCommand(KeyCategory.Replace, nameof(ReplaceAllInFileCommand), "Replace_ReplaceInFile", "Control+A");
+            KeyBindingManager.RegisterCommand(KeyCategory.Replace, nameof(ReplaceAllInFileCommand), "Replace_ReplaceInFile", string.Empty);
             KeyBindingManager.RegisterCommand(KeyCategory.Replace, nameof(UndoFileCommand), "Replace_UndoFile", "Control+T");
             KeyBindingManager.RegisterCommand(KeyCategory.Replace, nameof(PrevMatchCommand), "Replace_Previous", "Control+Left");
             KeyBindingManager.RegisterCommand(KeyCategory.Replace, nameof(NextMatchCommand), "Replace_Next", "Control+Right");
@@ -615,11 +615,11 @@ namespace dnGREP.WPF
         private bool isFullDialog = true;
         partial void OnIsFullDialogChanged(bool value)
         {
-            DialogSize = IsFullDialog ? new Size(980, 800) : new Size(680, 340);
+            DialogSize = IsFullDialog ? new Size(980, 690) : new Size(680, 300);
         }
 
         [ObservableProperty]
-        private Size dialogSize = new(980, 800);
+        private Size dialogSize = new(980, 690);
 
         [ObservableProperty]
         private string searchFor = string.Empty;

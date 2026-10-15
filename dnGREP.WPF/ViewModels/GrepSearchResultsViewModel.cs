@@ -173,6 +173,15 @@ namespace dnGREP.WPF
         }
 
         /// <summary>
+        /// Forgets the search results saved when the log was first shown, so the log stays
+        /// and can no longer be replaced by them.  Used when a replace is going ahead.
+        /// </summary>
+        public void DiscardSavedResults()
+        {
+            stashedResults = null;
+        }
+
+        /// <summary>
         /// Removes the replacement log from the Results pane.
         /// </summary>
         /// <param name="restoreSearchResults">true to put back the search results that were showing

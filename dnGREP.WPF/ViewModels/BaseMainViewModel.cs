@@ -692,7 +692,7 @@ namespace dnGREP.WPF
 
             if (name == nameof(CurrentGrepOperation) || name == nameof(IsSaveInProgress))
             {
-                if (ResultsViewModel.SearchResults.Count > 0 && !IsSaveInProgress)
+                if (ResultsViewModel.SearchResults.Count > 0 && !IsSaveInProgress && !ResultsViewModel.IsLogDisplayed)
                 {
                     CanSearchInResults = true;
                 }

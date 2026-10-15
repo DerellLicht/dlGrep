@@ -1785,7 +1785,7 @@ namespace dnGREP.WPF
                     OnPropertyChanged(nameof(CurrentGrepOperation));
                     CanSearch = true;
                     ClearMatchCountStatus();
-                    if (ReplaceType != ReplaceType.SelectedFiles)
+                    if (ReplaceType != ReplaceType.SelectedFiles && !ResultsViewModel.IsLogDisplayed)
                     {
                         ResultsViewModel.Clear();
                     }
@@ -2160,17 +2160,42 @@ namespace dnGREP.WPF
                     dlg.ViewModel.SearchOptions = SearchOptions;
                     dlg.ViewModel.SearchFor = SearchFor;
                     dlg.ViewModel.ReplaceWith = ReplaceWith;
+
+                    // the replacement log is built live in the Results pane as decisions are made;
+                    // hook up before the results are assigned so the first selection is seen
+                    ReplaceLogSession logSession = new(ResultsViewModel, replaceList, SearchFor, ReplaceWith,
+                        TypeOfSearch, SearchOptions);
+                    dlg.ViewModel.ReplaceMatch += logSession.OnReplaceMatch;
+                    dlg.ViewModel.PropertyChanged += logSession.OnViewModelPropertyChanged;
+
                     dlg.ViewModel.SearchResults = replaceList;
                     var result = dlg.ShowDialog();
+
+                    dlg.ViewModel.ReplaceMatch -= logSession.OnReplaceMatch;
+                    dlg.ViewModel.PropertyChanged -= logSession.OnViewModelPropertyChanged;
+
                     if (result.HasValue && result.Value)
                     {
                         doReplace = true;
+                    }
+                    else
+                    {
+                        // Cancel, Escape or closing the window: nothing is written, so
+                        // put back the search results the log replaced
+                        ResultsViewModel.EndLog(true);
                     }
                 }
 
                 if (doReplace)
                 {
                     ExecuteReplace(replaceList, true);
+
+                    if (CurrentGrepOperation != GrepOperation.Replace)
+                    {
+                        // nothing was started (for example, every marked file was already replaced),
+                        // so a log would describe changes that were not made
+                        ResultsViewModel.EndLog(true);
+                    }
                 }
             }
             else if (IsScriptRunning)
@@ -2225,7 +2250,15 @@ namespace dnGREP.WPF
                 ClearMatchCountStatus();
                 if (clearAll)
                 {
-                    ResultsViewModel.Clear();
+                    if (ResultsViewModel.IsLogDisplayed)
+                    {
+                        // the replacement log stays in the Results pane
+                        ResultsViewModel.DiscardSavedResults();
+                    }
+                    else
+                    {
+                        ResultsViewModel.Clear();
+                    }
                 }
                 else
                 {
@@ -2346,6 +2379,10 @@ namespace dnGREP.WPF
                         Utils.DeleteUndoFolder();
                         undoList.Clear();
                         needsClearUndo = false;
+
+                        // the files are back as they were, so the log no longer describes them
+                        ResultsViewModel.EndLog(false);
+                        CanSearchInResults = false;
                     }
                     else
                     {
@@ -3253,7 +3290,9 @@ namespace dnGREP.WPF
             {
                 var hasWritableFiles = ResultsViewModel.GetWritableFilesWithMatches().Any();
 
-                bool enabled = FilesFound && CurrentGrepOperation == GrepOperation.None &&
+                // the Results pane holds a replacement log, not live matches
+                bool enabled = !ResultsViewModel.IsLogDisplayed &&
+                        FilesFound && CurrentGrepOperation == GrepOperation.None &&
                         !IsSaveInProgress && !string.IsNullOrEmpty(SearchFor) &&
                         hasWritableFiles &&
                         // can only replace using the same parameters as was used for the search

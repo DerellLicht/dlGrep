@@ -39,10 +39,13 @@ namespace dnGREP.Engines
         /// <param name="searchType">search type used for the search</param>
         /// <param name="searchOptions">search options used for the search</param>
         /// <param name="initParams">engine settings (fuzzy threshold); defaults if null</param>
+        /// <param name="isDecided">if given, only lines that have at least one match for which this
+        /// returns true get an entry (used for the live log, which shows only decided matches);
+        /// all matches are still passed to the engine. Null means every line with a match</param>
         /// <returns>the log for the file; no entries if there are no matches</returns>
         public static ReplaceLogFile Build(string fileName, string fileText, IEnumerable<GrepMatch> matches,
             string searchPattern, string replacePattern, SearchType searchType, GrepSearchOption searchOptions,
-            GrepEngineInitParams? initParams = null)
+            GrepEngineInitParams? initParams = null, Func<GrepMatch, bool>? isDecided = null)
         {
             ReplaceLogFile file = new(fileName);
             List<GrepMatch> all = [.. matches.OrderBy(m => m.StartLocation)];
@@ -54,7 +57,7 @@ namespace dnGREP.Engines
                 searchType == SearchType.XPath || searchType == SearchType.Hex;
 
             if (wholeFile) {
-                BuildPositional(file, fileText, all);
+                BuildPositional(file, fileText, all, isDecided);
                 return file;
             }
 
@@ -89,7 +92,9 @@ namespace dnGREP.Engines
                 }
 
                 if (byLine.TryGetValue(lineNumber, out List<GrepMatch>? lineMatches)) {
-                    file.Entries.Add(BuildEntry(runner, lineNumber, filePosition, line, lineMatches, guidNote));
+                    if (isDecided == null || lineMatches.Any(isDecided)) {
+                        file.Entries.Add(BuildEntry(runner, lineNumber, filePosition, line, lineMatches, guidNote));
+                    }
                     remaining--;
                 }
 
@@ -165,7 +170,9 @@ namespace dnGREP.Engines
         /// <param name="file">receives the entries</param>
         /// <param name="fileText">the file text</param>
         /// <param name="matches">matches sorted by start</param>
-        private static void BuildPositional(ReplaceLogFile file, string fileText, List<GrepMatch> matches)
+        /// <param name="isDecided">if given, matches for which it returns false are left out</param>
+        private static void BuildPositional(ReplaceLogFile file, string fileText, List<GrepMatch> matches,
+            Func<GrepMatch, bool>? isDecided)
         {
             List<(int Start, string Text)> lines = [];
             using (StringReader stringReader = new(fileText))
@@ -182,6 +189,9 @@ namespace dnGREP.Engines
             }
 
             foreach (GrepMatch m in matches) {
+                if (isDecided != null && !isDecided(m)) {
+                    continue;
+                }
                 int first = FindLine(lines, m.StartLocation);
                 if (first < 0) {
                     continue;

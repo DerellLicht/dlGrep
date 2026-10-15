@@ -3177,6 +3177,24 @@ namespace dnGREP.Localization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Continue.
+        /// </summary>
+        public static string Replace_Continue {
+            get {
+                return ResourceManager.GetString("Replace_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace the current match and every match after it, in this file and all later files, then apply. Matches you already replaced or skipped are left as they are..
+        /// </summary>
+        public static string Replace_ContinueToolTip {
+            get {
+                return ResourceManager.GetString("Replace_ContinueToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Match {0}{1}{2}.
         /// </summary>
         public static string Main_ResultList_MatchToolTip1 {

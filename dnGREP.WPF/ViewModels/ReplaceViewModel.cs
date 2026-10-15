@@ -42,7 +42,7 @@ namespace dnGREP.WPF
             if (beenInitialized) return;
 
             beenInitialized = true;
-            KeyBindingManager.RegisterCommand(KeyCategory.Replace, nameof(ReplaceAllCommand), "Replace_ReplaceInAllFiles", "F10");
+            KeyBindingManager.RegisterCommand(KeyCategory.Replace, nameof(ReplaceAllCommand), "Replace_Continue", "F10");
             KeyBindingManager.RegisterCommand(KeyCategory.Replace, nameof(PrevFileCommand), "Replace_PreviousFile", "Control+PageUp");
             KeyBindingManager.RegisterCommand(KeyCategory.Replace, nameof(NextFileCommand), "Replace_NextFile", "Control+PageDown");
             KeyBindingManager.RegisterCommand(KeyCategory.Replace, nameof(ReplaceAllInFileCommand), "Replace_ReplaceInFile", "Control+A");
@@ -698,14 +698,29 @@ namespace dnGREP.WPF
 
         #region Commands
 
+        /// <summary>
+        /// The Continue button: marks the match under the cursor and every match after it
+        /// (rest of this file, then all later files) for replacement and closes with OK.
+        /// Decisions already made on earlier matches, and on matches before the cursor in this file,
+        /// are left alone. With no match selected it starts at the beginning of the current file.
+        /// </summary>
         private void ReplaceAll()
         {
             if (SearchResults != null)
             {
-                foreach (GrepSearchResult gsr in SearchResults)
+                int startFile = Math.Max(fileIndex, 0);
+                for (int i = startFile; i < SearchResults.Count; i++)
                 {
-                    foreach (var m in gsr.Matches)
-                        m.ReplaceMatch = true;
+                    GrepSearchResult gsr = SearchResults[i];
+                    int first = 0;
+                    if (i == fileIndex && SelectedGrepMatch != null)
+                    {
+                        first = Math.Max(gsr.Matches.IndexOf(SelectedGrepMatch), 0);
+                    }
+                    for (int j = first; j < gsr.Matches.Count; j++)
+                    {
+                        gsr.Matches[j].ReplaceMatch = true;
+                    }
                 }
                 FormatFileReplaceStatus();
 
@@ -875,9 +890,9 @@ namespace dnGREP.WPF
             {
                 if (!string.IsNullOrEmpty(ReplaceAllCommand.KeyGestureText))
                 {
-                    return $"{Resources.Replace_ReplaceAllMatchesInAllFilesAndApply} ({ReplaceAllCommand.KeyGestureText})";
+                    return $"{Resources.Replace_ContinueToolTip} ({ReplaceAllCommand.KeyGestureText})";
                 }
-                return Resources.Replace_ReplaceAllMatchesInAllFilesAndApply;
+                return Resources.Replace_ContinueToolTip;
             }
         }
 

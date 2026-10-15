@@ -193,13 +193,6 @@
                         </StackPanel>
                     </Button>
 
-                    <Button Grid.Row="0" Grid.Column="5"
-                            TabIndex="5"
-                            Content="{l:Loc Key='Replace_ReplaceInAllFiles'}"
-                            Command="{Binding ReplaceAllCommand}"
-                            ToolTip="{Binding ReplaceAllCommandToolTip}"
-                            Style="{StaticResource ReplaceButton}"/>
-
                     <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6"
                            Margin="12,3"
                            Content="{l:Loc Key='Replace_Matches'}"
@@ -240,6 +233,12 @@
                             <Label Content="{l:Loc Key='Replace_Next'}"/>
                         </StackPanel>
                     </Button>
+                    <Button Grid.Row="2" Grid.Column="5"
+                            Margin="3" TabIndex="14"
+                            Content="{l:Loc Key='Replace_Continue'}"
+                            Command="{Binding ReplaceAllCommand}"
+                            ToolTip="{Binding ReplaceAllCommandToolTip}"
+                            Style="{StaticResource ReplaceButton}"/>
                 </Grid>
             </Grid>
 

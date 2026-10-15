@@ -2447,6 +2447,14 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <value>Move to the previous match in this file</value>
     <comment>Replace window, Previous button tooltip</comment>
   </data>
+  <data name="Replace_Continue" xml:space="preserve">
+    <value>_Continue</value>
+    <comment>Replace window, Continue button label (accel): replaces the current match and all the matches after it, then closes the window</comment>
+  </data>
+  <data name="Replace_ContinueToolTip" xml:space="preserve">
+    <value>Replace the current match and every match after it, in this file and all later files, then apply. Matches you already replaced or skipped are left as they are.</value>
+    <comment>Replace window, Continue button tooltip</comment>
+  </data>
   <data name="Replace_Next" xml:space="preserve">
     <value>_Skip</value>
     <comment>Replace window, Skip button label (accel): leaves the current match unchanged and moves to the next match</comment>

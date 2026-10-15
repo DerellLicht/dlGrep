@@ -379,20 +379,6 @@ namespace Tests
             Assert.Equal(expected, Utils.IsPathValid(path));
         }
 
-        [Theory]
-        [InlineData("0.9.1", "0.9.2", true)]
-        [InlineData("0.9.1", "0.9.2.5556", true)]
-        [InlineData("0.9.1.5554", "0.9.1.5556", true)]
-        [InlineData("0.9.0.5557", "0.9.1.5550", true)]
-        [InlineData("0.9.1", "0.9.0.5556", false)]
-        [InlineData("0.9.5.5000", "0.9.0.5556", false)]
-        [InlineData("0.9.5.5000", "", false)]
-        [InlineData("xyz", "abc", false)]
-        public void CompareVersions(string v1, string v2, bool expected)
-        {
-            Assert.Equal(expected, PublishedVersionExtractor.IsUpdateNeeded(v1, v2));
-        }
-
         [Fact]
         public void GetLinesEx_Returns_Correct_Line()
         {

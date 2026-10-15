@@ -13,9 +13,6 @@
                  FlowDirection="{Binding CultureFlowDirection}"
                  FontFamily="{Binding ApplicationFontFamily}"
                  FontSize="{Binding DialogFontSize}"
-                 my:DiginesisHelpProvider.HelpKeyword="Options"
-                 my:DiginesisHelpProvider.HelpNavigator="Topic"
-                 my:DiginesisHelpProvider.ShowHelp="True"
                  ResizeMode="CanResize"
                  SizeToContent="Width"
                  my:ChromeButtonExtension.ButtonVisibility="MinimizeHidden"
@@ -205,32 +202,6 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Header="{l:Loc Key='Options_CheckingForUpdates'}">
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox Margin="0,0,3,0" Name="cbCheckForUpdates" Content="{l:Loc Key='Options_EnableAutomaticCheckingEvery'}"
-                                  IsChecked="{Binding Path=EnableCheckForUpdates}" />
-                            <TextBox Margin="3,0,0,0"
-                                 IsEnabled="{Binding ElementName=cbCheckForUpdates, Path=IsChecked}"
-                                 Text="{Binding Path=CheckForUpdatesInterval, UpdateSourceTrigger=PropertyChanged}">
-                                <TextBox.Width>
-                                    <MultiBinding Converter="{StaticResource TextBoxWidthConverter}" ConverterParameter="32" FallbackValue="32">
-                                        <Binding RelativeSource="{RelativeSource Mode=Self}"/>
-                                        <Binding Path="ApplicationFontFamily"/>
-                                        <Binding Path="DialogFontSize"/>
-                                    </MultiBinding>
-                                </TextBox.Width>
-                            </TextBox>
-                            <TextBlock Margin="3,0" Text="{l:Loc Key='Options_CheckDays'}" />
-                        </StackPanel>
-                        <Border ToolTip="{Binding Path=PanelTooltip}" Margin="24,3">
-                            <CheckBox Content="{l:Loc Key='Options_CheckForUpdatesWhenWindowsStarts'}"
-                                      IsChecked="{Binding Path=EnableRunAtStartup}"
-                                      IsEnabled="{Binding Path=CanChangeRunAtStartup }"/>
-                        </Border>
-                    </StackPanel>
-                </GroupBox>
-
                 <GroupBox Header="{l:Loc Key='Options_Theme'}">
                     <StackPanel>
                         <CheckBox Margin="0,0,0,3" Content="{l:Loc Key='Options_FollowWindowsTheme'}"
@@ -278,13 +249,6 @@
                                     ToolTip="{l:Loc Key='Options_PreviewToolForTranslators'}"
                                     Command="{Binding LoadResxCommand}"/>
                         </StackPanel>
-                        <TextBlock>
-                            <Run Text="{l:Loc Key='Options_WantADifferentLanguage'}"/>
-                            <Hyperlink NavigateUri="https://github.com/dnGrep/dnGrep/wiki/Translate-dnGrep" 
-                                       RequestNavigate="Hyperlink_RequestNavigate">
-                                <Run Text="{l:Loc Key='Options_HelpTranslateDnGrep'}"/>
-                            </Hyperlink>
-                        </TextBlock>
                     </StackPanel>
                 </GroupBox>
 

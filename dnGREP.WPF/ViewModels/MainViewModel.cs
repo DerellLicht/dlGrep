@@ -73,7 +73,6 @@ namespace dnGREP.WPF
             }
 
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(OpenBookmarksWindowCommand), "Main_Menu_Bookmarks", string.Empty);
-            KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(CheckForUpdatesCommand), "Main_Menu_About_CheckForUpdates", string.Empty);
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(OpenAppDataCommand), "Main_Menu_About_AppData", string.Empty);
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(OpenAppLogsCommand), "Main_Menu_About_AppLogs", string.Empty);
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(AboutCommand), "Main_Menu_About_AboutDnGrep", string.Empty);
@@ -137,7 +136,6 @@ namespace dnGREP.WPF
                 ResultsViewModel.OpenFileRequest += SearchResults_OpenFileRequest;
                 ResultsViewModel.SearchResults.CollectionChanged += SearchResults_CollectionChanged;
 
-                CheckVersion();
                 ControlsInit();
                 PopulateTimeIntervals();
                 PopulateEncodings();
@@ -743,17 +741,9 @@ namespace dnGREP.WPF
             q => true);
 
 
-        private RelayCommand? helpCommand;
-        public RelayCommand HelpCommand => helpCommand ??= new RelayCommand(
-            param => ShowHelp());
-
         private RelayCommand? aboutCommand;
         public RelayCommand AboutCommand => aboutCommand ??= new RelayCommand(
             param => ShowAbout());
-
-        private RelayCommand? checkForUpdatesCommand;
-        public RelayCommand CheckForUpdatesCommand => checkForUpdatesCommand ??= new RelayCommand(
-            param => CheckForUpdates(true));
 
         private RelayCommand? browseFolderCommand;
         public RelayCommand BrowseFolderCommand => browseFolderCommand ??= new RelayCommand(
@@ -2744,16 +2734,6 @@ namespace dnGREP.WPF
             keyboardForm.ShowDialog();
         }
 
-        private static void ShowHelp()
-        {
-            ProcessStartInfo startInfo = new()
-            {
-                FileName = @"https://github.com/dnGrep/dnGrep/wiki",
-                UseShellExecute = true
-            };
-            using var proc = Process.Start(startInfo);
-        }
-
         private static void ShowAbout()
         {
             AboutWindow aboutForm = new()
@@ -3610,70 +3590,12 @@ namespace dnGREP.WPF
             }
         }
 
-        private static void CheckVersion()
-        {
-            if (Settings.Get<bool>(GrepSettings.Key.EnableUpdateChecking))
-            {
-                DateTime lastCheck = Settings.Get<DateTime>(GrepSettings.Key.LastCheckedVersion);
-                TimeSpan duration = DateTime.Now.Subtract(lastCheck);
-                if (duration.TotalDays >= Settings.Get<int>(GrepSettings.Key.UpdateCheckInterval))
-                {
-                    CheckForUpdates(false);
-                }
-            }
-        }
-
-        private static async void CheckForUpdates(bool fromCommand)
-        {
-            try
-            {
-                PublishedVersionExtractor versionChk = new();
-                string version = await PublishedVersionExtractor.QueryLatestVersion();
-
-                if (!string.IsNullOrEmpty(version))
-                {
-                    string currentVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? string.Empty;
-                    if (PublishedVersionExtractor.IsUpdateNeeded(currentVersion, version))
-                    {
-                        if (MessageBox.Show(TranslationSource.Format(Resources.MessageBox_NewVersionOfDnGREP0IsAvailableForDownload, version) +
-                            Environment.NewLine + Resources.MessageBox_WouldYouLikeToDownloadItNow,
-                            Resources.MessageBox_DnGrep + " " + Resources.MessageBox_NewVersion,
-                            MessageBoxButton.YesNo, MessageBoxImage.Information,
-                            MessageBoxResult.Yes, TranslationSource.Instance.FlowDirection) == MessageBoxResult.Yes)
-                        {
-                            ProcessStartInfo startInfo = new()
-                            {
-                                FileName = "https://github.com/dnGrep/dnGrep/releases/latest",
-                                UseShellExecute = true
-                            };
-                            using var proc = Process.Start(startInfo);
-                        }
-                    }
-                    else if (fromCommand)
-                    {
-                        MessageBox.Show(Resources.MessageBox_DnGrepIsUpToDate,
-                            Resources.MessageBox_DnGrep, MessageBoxButton.OK, MessageBoxImage.Information,
-                            MessageBoxResult.OK, TranslationSource.Instance.FlowDirection);
-                    }
-                }
-
-                Settings.Set(GrepSettings.Key.LastCheckedVersion, DateTime.Now);
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "Failure in check version");
-            }
-        }
-
         private void ControlsInit()
         {
             workerSearchReplace.WorkerReportsProgress = true;
             workerSearchReplace.DoWork += DoSearchReplace;
             workerSearchReplace.RunWorkerCompleted += SearchReplaceCompleted;
             workerSearchReplace.ProgressChanged += SearchProgressChanged;
-
-            DiginesisHelpProvider.HelpNamespace = @"https://github.com/dnGrep/dnGrep/wiki/";
-            DiginesisHelpProvider.ShowHelp = true;
         }
 
         private void PopulateTimeIntervals()

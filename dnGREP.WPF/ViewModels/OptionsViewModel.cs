@@ -356,23 +356,6 @@ namespace dnGREP.WPF
         private bool isAdministrator;
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(CanChangeRunAtStartup))]
-        private bool enableCheckForUpdates;
-        partial void OnEnableCheckForUpdatesChanged(bool value)
-        {
-            if (!value)
-                EnableRunAtStartup = false;
-        }
-
-        [ObservableProperty]
-        private int checkForUpdatesInterval;
-
-        [ObservableProperty]
-        private bool enableRunAtStartup;
-
-        public bool CanChangeRunAtStartup => EnableCheckForUpdates && IsAdministrator;
-
-        [ObservableProperty]
         private bool followWindowsTheme = true;
         partial void OnFollowWindowsThemeChanged(bool value)
         {
@@ -748,7 +731,6 @@ namespace dnGREP.WPF
                 return
                 EnableWindowsIntegration != RegistryOperations.IsShellRegistered("Directory") ||
                 EnableWindows11ShellMenu != enableWindows11ShellMenuOriginalValue ||
-                EnableRunAtStartup != RegistryOperations.IsStartupRegistered() ||
                 IsSingletonInstance != Settings.Get<bool>(GrepSettings.Key.IsSingletonInstance) ||
                 MinimizeToNotificationArea != Settings.Get<bool>(GrepSettings.Key.MinimizeToNotificationArea) ||
                 RestoreWindowKeyboardShortcut != Settings.Get<string>(GrepSettings.Key.RestoreWindowKeyboardShortcut) ||
@@ -756,8 +738,6 @@ namespace dnGREP.WPF
                 ConfirmExitSearch != Settings.Get<bool>(GrepSettings.Key.ConfirmExitSearch) ||
                 ConfirmExitSearchDuration != Settings.Get<double>(GrepSettings.Key.ConfirmExitSearchDuration) ||
                 PassCommandLineToSingleton != Settings.Get<bool>(GrepSettings.Key.PassCommandLineToSingleton) ||
-                EnableCheckForUpdates != Settings.Get<bool>(GrepSettings.Key.EnableUpdateChecking) ||
-                CheckForUpdatesInterval != Settings.Get<int>(GrepSettings.Key.UpdateCheckInterval) ||
                 ShowLinesInContext != Settings.Get<bool>(GrepSettings.Key.ShowLinesInContext) ||
                 ContextLinesBefore != Settings.Get<int>(GrepSettings.Key.ContextLinesBefore) ||
                 ContextLinesAfter != Settings.Get<int>(GrepSettings.Key.ContextLinesAfter) ||
@@ -1098,7 +1078,6 @@ namespace dnGREP.WPF
             EnableWindows11ShellMenu = enableWindows11ShellMenuOriginalValue = SparsePackage.IsRegistered;
             CanModifyWindows11ShellMenu = SparsePackage.CanRegisterPackage && !IsAdministrator;
             EnableWindows11ShellMenuTooltip = SparsePackage.CanRegisterPackage ? null : Resources.Options_RequiresWindows11;
-            EnableRunAtStartup = RegistryOperations.IsStartupRegistered();
             IsSingletonInstance = Settings.Get<bool>(GrepSettings.Key.IsSingletonInstance);
             MinimizeToNotificationArea = Settings.Get<bool>(GrepSettings.Key.MinimizeToNotificationArea);
             RestoreWindowKeyboardShortcut = Settings.Get<string>(GrepSettings.Key.RestoreWindowKeyboardShortcut);
@@ -1106,8 +1085,6 @@ namespace dnGREP.WPF
             ConfirmExitSearch = Settings.Get<bool>(GrepSettings.Key.ConfirmExitSearch);
             ConfirmExitSearchDuration = Settings.Get<double>(GrepSettings.Key.ConfirmExitSearchDuration);
             PassCommandLineToSingleton = Settings.Get<bool>(GrepSettings.Key.PassCommandLineToSingleton);
-            EnableCheckForUpdates = Settings.Get<bool>(GrepSettings.Key.EnableUpdateChecking);
-            CheckForUpdatesInterval = Settings.Get<int>(GrepSettings.Key.UpdateCheckInterval);
             CompareApplicationPath = Settings.Get<string>(GrepSettings.Key.CompareApplication);
             CompareApplicationArgs = Settings.Get<string>(GrepSettings.Key.CompareApplicationArgs);
             TreeListViewEnabled = Settings.Get<bool>(GrepSettings.Key.TreeListViewEnabled);
@@ -1274,15 +1251,6 @@ namespace dnGREP.WPF
                 {
                     RegistryOperations.ShellUnregisterContextMenu();
                 }
-
-                if (EnableRunAtStartup)
-                {
-                    RegistryOperations.StartupRegister();
-                }
-                else
-                {
-                    RegistryOperations.StartupUnregister();
-                }
             }
             else
             {
@@ -1329,8 +1297,6 @@ namespace dnGREP.WPF
             Settings.Set(GrepSettings.Key.ConfirmExitSearch, ConfirmExitSearch);
             Settings.Set(GrepSettings.Key.ConfirmExitSearchDuration, ConfirmExitSearchDuration);
             Settings.Set(GrepSettings.Key.PassCommandLineToSingleton, PassCommandLineToSingleton);
-            Settings.Set(GrepSettings.Key.EnableUpdateChecking, EnableCheckForUpdates);
-            Settings.Set(GrepSettings.Key.UpdateCheckInterval, CheckForUpdatesInterval);
             Settings.Set(GrepSettings.Key.CompareApplication, CompareApplicationPath);
             Settings.Set(GrepSettings.Key.CompareApplicationArgs, CompareApplicationArgs);
             Settings.Set(GrepSettings.Key.TreeListViewEnabled, TreeListViewEnabled);

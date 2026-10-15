@@ -16,9 +16,6 @@
                  FlowDirection="{Binding CultureFlowDirection}"
                  FontFamily="{Binding ApplicationFontFamily}"
                  FontSize="{Binding MainFormFontSize}"
-                 my:DiginesisHelpProvider.HelpKeyword="Search-Window"
-                 my:DiginesisHelpProvider.HelpNavigator="Topic"
-                 my:DiginesisHelpProvider.ShowHelp="True"
                  AllowDrop="True"
                  my:FileDragDropHelper.IsFileDragDropEnabled="True" 
                  my:FileDragDropHelper.FileDragDropTarget="{Binding}"
@@ -199,8 +196,6 @@
                               Visibility="{Binding BookmarksVisible, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     <MenuItem Margin="0,0,3,0" Header="{l:Loc Key='Main_Menu_About'}" TabIndex="4"
                               my:MenuProperties.ShowIconColumn="False">
-                        <MenuItem Header="{l:Loc Key='Main_Menu_About_Help'}" Command="{Binding HelpCommand}" InputGestureText="{Binding HelpCommand.KeyGestureText}"/>
-                        <MenuItem Header="{l:Loc Key='Main_Menu_About_CheckForUpdates'}" Command="{Binding CheckForUpdatesCommand}" InputGestureText="{Binding CheckForUpdatesCommand.KeyGestureText}"/>
                         <MenuItem Header="{l:Loc Key='Main_Menu_About_AppData'}" Command="{Binding OpenAppDataCommand}" InputGestureText="{Binding OpenAppDataCommand.KeyGestureText}" />
                         <MenuItem Header="{l:Loc Key='Main_Menu_About_AppLogs'}" Command="{Binding OpenAppLogsCommand}" InputGestureText="{Binding OpenAppLogsCommand.KeyGestureText}" />
                         <MenuItem Header="{l:Loc Key='Main_Menu_About_AboutDnGrep'}" Command="{Binding AboutCommand}" InputGestureText="{Binding AboutCommand.KeyGestureText}" />
@@ -793,10 +788,7 @@
                                Visibility="{Binding IsEverythingSearchMode, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                         <ComboBox Name="tbFilePattern" Grid.Row="0" Grid.Column="4"
                                   Margin="3,0,3,3" 
-                                  Style="{StaticResource ComboBoxBaseStyle}"
-                                  my:DiginesisHelpProvider.HelpKeyword="SearchReplace"
-                                  my:DiginesisHelpProvider.HelpNavigator="Topic"
-                                  my:DiginesisHelpProvider.ShowHelp="True" TabIndex="12"
+                                  Style="{StaticResource ComboBoxBaseStyle}" TabIndex="12"
                                   Text="{Binding Path=FilePattern, UpdateSourceTrigger=PropertyChanged}"
                                   ItemsSource="{Binding Path=FastFileMatchBookmarks}"
                                   TextSearch.TextPath="StringValue"
@@ -826,10 +818,7 @@
                                Visibility="{Binding IsEverythingSearchMode, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                         <ComboBox Name="tbFilePatternIgnore" Grid.Row="1" Grid.Column="4"
                                   Margin="3,3,3,0" VerticalAlignment="Top"
-                                  Height="{Binding ElementName=tbFilePattern, Path=ActualHeight}"
-                                  my:DiginesisHelpProvider.HelpKeyword="SearchReplace"
-                                  my:DiginesisHelpProvider.HelpNavigator="Topic"
-                                  my:DiginesisHelpProvider.ShowHelp="True" TabIndex="14"
+                                  Height="{Binding ElementName=tbFilePattern, Path=ActualHeight}" TabIndex="14"
                                   Text="{Binding Path=FilePatternIgnore, UpdateSourceTrigger=PropertyChanged}"
                                   ItemsSource="{Binding Path=FastFileNotMatchBookmarks}"
                                   TextSearch.TextPath="StringValue"
@@ -963,9 +952,6 @@
                                    Target="{Binding ElementName=tbSearchFor}"/>
                             <my:MultilineComboBox x:Name="tbSearchFor" Grid.Row="0" Grid.Column="1"
                                       Margin="3,0,3,3" Padding="0"
-                                      my:DiginesisHelpProvider.HelpKeyword="Regular-Expressions"
-                                      my:DiginesisHelpProvider.HelpNavigator="Topic"
-                                      my:DiginesisHelpProvider.ShowHelp="True"
                                       my:FocusExtension.IsFocused="{Binding IsSearchForFocused}"
                                       Text="{Binding SearchFor}"
                                       ItemsSource="{Binding FastSearchBookmarks}"

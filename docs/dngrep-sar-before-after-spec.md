@@ -62,7 +62,7 @@ After a replace, the Results pane shows a record of what was done, in the same s
   - The bulk buttons (Replace in file where present, Replace the rest) add or update entries for every match they mark.
   - File headers appear as the user reaches each file.
 - **OK:** the marked matches are written to disk (`ExecuteReplace`) and the log stays in the Results pane.
-- **Cancel, Escape, closing the window, or anything other than OK:** nothing is written, the log is cleared, the marks are cleared, and the saved search results are put back in the Results pane (Derell, Oct 11 findings answer 3).
+- **Cancel, Escape, closing the window, or anything other than OK:** nothing is written, the log is cleared, the marks are cleared, and the saved search results are put back in the Results pane (Derell, Oct 15, findings answer 3).
 
 ### R2. Log content and format
 

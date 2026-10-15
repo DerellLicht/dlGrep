@@ -2,7 +2,7 @@
 
 Status: written for Derell's review, 2026-10-15. Read-only survey; nothing was built, run, or changed in the code.
 
-Basis: source on branch `sar-log` at commit `f65c9d7`, read against the Draft 7 spec. (The copy of the spec in this `docs` folder is still **Draft 6**; Draft 7 is in the Claude project. See section 9.)
+Basis: source on branch `sar-log` at commit `f65c9d7`, read against the Draft 7 spec. (The spec in this `docs` folder was Draft 6 when the survey began; Draft 7 was committed over it afterward.)
 
 Everything below was established by reading source and is **[verified]** unless marked **[unverified]**, which means it needs a build and a runtime check. Line numbers refer to commit `f65c9d7`.
 
@@ -176,7 +176,7 @@ This settles the Phase 1 question the spec left open ("approach 1 or 2").
 2. **Colours:** use the existing theme backgrounds (`DiffText.*.Word.Background`, `Match.Skip.*`) as in section 4, instead of HisGrepship's blue and green bold text?
 3. **Cancel loses the search results** (section 7, item 6). Leave it blank as specified, or restore the original results on Cancel?
 4. **GUID tokens** in the replace text (section 6): a short note on the log entry is the suggested handling. OK?
-5. **The `docs/dngrep-sar-before-after-spec.md` in this repo is Draft 6** (it says so in its first line); the Draft 7 you described is not in the repo yet. I did not overwrite it, in case your copy has not been pushed. Tell me if you want me to commit Draft 7 over it.
+5. **Resolved:** `docs/dngrep-sar-before-after-spec.md` was Draft 6 in the repo; Draft 7 has now been committed over it.
 6. Where you arrange the Replace window relative to the main window affects how much of the live log you see (section 7, item 9). No action needed now; this is just to keep in mind for the first test build.
 
 ## 10. Next step

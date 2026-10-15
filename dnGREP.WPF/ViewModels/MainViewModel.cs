@@ -2171,6 +2171,11 @@ namespace dnGREP.WPF
                     dlg.ViewModel.ReplaceMatch += logSession.OnReplaceMatch;
                     dlg.ViewModel.PropertyChanged += logSession.OnViewModelPropertyChanged;
 
+                    // the Results pane becomes the replacement log as soon as the window opens:
+                    // the search results are saved and the pane is emptied; entries follow as
+                    // decisions are made, and Cancel puts the search results back
+                    ResultsViewModel.ShowLog([], SearchFor);
+
                     dlg.ViewModel.SearchResults = replaceList;
                     var result = dlg.ShowDialog();
 

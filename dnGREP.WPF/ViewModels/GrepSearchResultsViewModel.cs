@@ -132,6 +132,8 @@ namespace dnGREP.WPF
             // a new search discards any replacement log and the saved search results
             stashedResults = null;
             IsLogDisplayed = false;
+            CurrentLog = [];
+            LogInfo = null;
         }
 
         /// <summary>
@@ -142,6 +144,23 @@ namespace dnGREP.WPF
 
         // the search results that were displayed when the log was first shown
         private List<FormattedGrepResult>? stashedResults;
+
+        /// <summary>
+        /// The log now showing in the Results pane, one item per file; empty when no log is showing.
+        /// Used to save the log.
+        /// </summary>
+        public IReadOnlyList<ReplaceLogFile> CurrentLog { get; private set; } = [];
+
+        /// <summary>
+        /// The search and replace settings the log was made with (for the saved report's header).
+        /// </summary>
+        public ReplaceLogInfo? LogInfo { get; set; }
+
+        /// <summary>
+        /// Raised each time the log shown in the Results pane is replaced by a newer one,
+        /// so the tree can scroll the newest entry into view.
+        /// </summary>
+        public event EventHandler? LogUpdated;
 
         /// <summary>
         /// Shows the replacement log in the Results pane.  On the first call the current search
@@ -159,7 +178,8 @@ namespace dnGREP.WPF
             }
 
             SearchResults.Clear();
-            List<GrepSearchResult> results = [.. logs.Select(l => ReplaceLogConverter.ToSearchResult(l, searchPattern))];
+            CurrentLog = [.. logs];
+            List<GrepSearchResult> results = [.. CurrentLog.Select(l => ReplaceLogConverter.ToSearchResult(l, searchPattern))];
             foreach (GrepSearchResult r in results)
             {
                 FormattedGrepResult item = new(r, FolderPath, ViewWhitespace)
@@ -170,6 +190,8 @@ namespace dnGREP.WPF
                 };
                 SearchResults.Add(item);
             }
+
+            LogUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -201,6 +223,8 @@ namespace dnGREP.WPF
             }
             stashedResults = null;
             IsLogDisplayed = false;
+            CurrentLog = [];
+            LogInfo = null;
         }
 
         public void Clear(List<GrepSearchResult> list)

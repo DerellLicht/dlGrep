@@ -1187,6 +1187,8 @@
                                         <MenuItem Header="{l:Loc Key='Main_MoreMenu_Save_Report'}" Command="{Binding SaveReportCommand}" InputGestureText="{Binding SaveReportCommand.KeyGestureText}" />
                                         <MenuItem Header="{l:Loc Key='Main_MoreMenu_Save_TextResults'}" Command="{Binding SaveTextResultsCommand}" InputGestureText="{Binding SaveTextResultsCommand.KeyGestureText}" />
                                         <MenuItem Header="{l:Loc Key='Main_MoreMenu_Save_CSVResults'}" Command="{Binding SaveCsvResultsCommand}" InputGestureText="{Binding SaveCsvResultsCommand.KeyGestureText}" />
+                                        <MenuItem Header="{l:Loc Key='Main_MoreMenu_Save_HtmlLog'}" Command="{Binding SaveHtmlLogCommand}" InputGestureText="{Binding SaveHtmlLogCommand.KeyGestureText}"
+                                                  Visibility="{Binding ResultsViewModel.IsLogDisplayed, Converter={StaticResource BoolToVisibilityConverter}}" />
                                     </MenuItem>
                                     <MenuItem Header="{l:Loc Key='Main_MoreMenu_Report_Options'}" Command="{Binding ReportOptionsCommand}" InputGestureText="{Binding ReportOptionsCommand.KeyGestureText}" />
                                 </ContextMenu>

@@ -1127,6 +1127,14 @@ dlGrep "C:\Program Files\dlGrep" t\w*t</value>
     <value>Re_place with:</value>
     <comment>Main window, replace text input box label (accel)</comment>
   </data>
+  <data name="Main_ReportOption_HtmlFileFormat" xml:space="preserve">
+    <value>HTML page</value>
+    <comment>Main window, save replace log, html format label</comment>
+  </data>
+  <data name="Main_MoreMenu_Save_HtmlLog" xml:space="preserve">
+    <value>Replace log as HTML</value>
+    <comment>Main window, More button menu item label, shown only while a replace log is displayed</comment>
+  </data>
   <data name="Main_ReportOption_CSVFileFormat" xml:space="preserve">
     <value>CSV (comma separated)</value>
     <comment>Main window, save report, report type format label</comment>

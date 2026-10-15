@@ -3159,6 +3159,24 @@ namespace dnGREP.Localization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HTML page.
+        /// </summary>
+        public static string Main_ReportOption_HtmlFileFormat {
+            get {
+                return ResourceManager.GetString("Main_ReportOption_HtmlFileFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace log as HTML.
+        /// </summary>
+        public static string Main_MoreMenu_Save_HtmlLog {
+            get {
+                return ResourceManager.GetString("Main_MoreMenu_Save_HtmlLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Replace Log.
         /// </summary>
         public static string Main_ReplaceLog_Title {

@@ -95,6 +95,7 @@ namespace dnGREP.WPF
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(SaveReportCommand), "Main_MoreMenu_Save_Report", string.Empty);
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(SaveTextResultsCommand), "Main_MoreMenu_Save_TextResults", string.Empty);
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(SaveCsvResultsCommand), "Main_MoreMenu_Save_CSVResults", string.Empty);
+            KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(SaveHtmlLogCommand), "Main_MoreMenu_Save_HtmlLog", string.Empty);
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(ReportOptionsCommand), "Main_MoreMenu_Report_Options", string.Empty);
 
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(HighlightsCommand), "Main_HighlightMatches", string.Empty);
@@ -825,6 +826,10 @@ namespace dnGREP.WPF
         private RelayCommand? saveCsvResultsCommand;
         public RelayCommand SaveCsvResultsCommand => saveCsvResultsCommand ??= new RelayCommand(
             param => SaveResultsToFile("CSV"));
+
+        private RelayCommand? saveHtmlLogCommand;
+        public RelayCommand SaveHtmlLogCommand => saveHtmlLogCommand ??= new RelayCommand(
+            param => SaveResultsToFile("Html"));
 
         private RelayCommand? reportOptionsCommand;
         public RelayCommand ReportOptionsCommand => reportOptionsCommand ??= new RelayCommand(
@@ -2199,6 +2204,7 @@ namespace dnGREP.WPF
                     // the replacement log is built live in the Results pane as decisions are made;
                     // hook up before the results are assigned so the first selection is seen
                     string statusBeforeLog = StatusMessage;
+                    ResultsViewModel.LogInfo = new ReplaceLogInfo(SearchFor, ReplaceWith, GetSearchOptions(), DateTime.Now);
                     ReplaceLogSession logSession = new(ResultsViewModel, replaceList, SearchFor, ReplaceWith,
                         TypeOfSearch, SearchOptions, text => StatusMessage = text);
                     dlg.ViewModel.ReplaceMatch += logSession.OnReplaceMatch;
@@ -2223,6 +2229,10 @@ namespace dnGREP.WPF
                     if (result.HasValue && result.Value)
                     {
                         doReplace = true;
+                        if (ResultsViewModel.LogInfo is ReplaceLogInfo logInfo)
+                        {
+                            ResultsViewModel.LogInfo = logInfo with { Time = DateTime.Now };
+                        }
                     }
                     else
                     {
@@ -3243,6 +3253,13 @@ namespace dnGREP.WPF
 
         private async void SaveResultsToFile(string? reportType)
         {
+            if (ResultsViewModel.IsLogDisplayed)
+            {
+                // the Results pane shows a replacement log, not search results: save the log
+                await SaveReplaceLogToFile(reportType);
+                return;
+            }
+
             if (FilesFound)
             {
                 SaveFileDialog dlg = new();
@@ -3304,6 +3321,107 @@ namespace dnGREP.WPF
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Saves the replacement log that is showing in the Results pane.  "CSV" writes csv,
+        /// "Html" writes an html page, and anything else ("Report", "Text") writes the text report.
+        /// Does nothing if there is no log yet (no decision has been made).
+        /// </summary>
+        /// <param name="reportType">the menu item that was used</param>
+        private async Task SaveReplaceLogToFile(string? reportType)
+        {
+            IReadOnlyList<ReplaceLogFile> log = ResultsViewModel.CurrentLog;
+            ReplaceLogInfo? logInfo = ResultsViewModel.LogInfo;
+            if (log.Count == 0 || logInfo == null)
+            {
+                return;
+            }
+
+            SaveFileDialog dlg = new();
+            switch (reportType)
+            {
+                case "CSV":
+                    dlg.Filter = Resources.Main_ReportOption_CSVFileFormat + "|*.csv";
+                    dlg.DefaultExt = "*.csv";
+                    break;
+                case "Html":
+                    dlg.Filter = Resources.Main_ReportOption_HtmlFileFormat + "|*.html";
+                    dlg.DefaultExt = "*.html";
+                    break;
+                default:
+                    dlg.Filter = Resources.Main_ReportOption_ReportFileFormat + "|*.txt";
+                    dlg.DefaultExt = "*.txt";
+                    break;
+            }
+            dlg.FileName = "replace-log";
+            dlg.InitialDirectory = PathSearchText.BaseFolder;
+
+            var result = dlg.ShowDialog();
+            if (!result.HasValue || !result.Value)
+            {
+                return;
+            }
+
+            // theme colors can only be read on the UI thread
+            ReplaceLogColors colors = GetReplaceLogColors();
+            try
+            {
+                IsSaveInProgress = true;
+                await Task.Run(() =>
+                {
+                    string content = reportType switch
+                    {
+                        "CSV" => ReplaceLogWriter.ToCsv(log),
+                        "Html" => ReplaceLogWriter.ToHtml(log, logInfo, colors),
+                        _ => ReplaceLogWriter.ToText(log, logInfo)
+                    };
+                    File.WriteAllText(dlg.FileName, content, Encoding.UTF8);
+                });
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Error creating replace log file");
+                MessageBox.Show(Resources.MessageBox_ThereWasAnErrorCreatingTheFile + App.LogDir,
+                    Resources.MessageBox_DnGrep,
+                    MessageBoxButton.OK, MessageBoxImage.Error,
+                    MessageBoxResult.OK, TranslationSource.Instance.FlowDirection);
+            }
+            finally
+            {
+                IsSaveInProgress = false;
+            }
+        }
+
+        /// <summary>
+        /// The colors of the replacement log in the Results pane, as the saved html uses them.
+        /// </summary>
+        private static ReplaceLogColors GetReplaceLogColors()
+        {
+            return new ReplaceLogColors(
+                CssColor("PreviewText.Background", "#1e1e1e"), CssColor("PreviewText.Foreground", "#dcdcdc"),
+                CssColor("DiffText.Deleted.Word.Background", "#8a0000"),
+                CssColor("DiffText.Inserted.Word.Background", "#006400"),
+                CssColor("Match.Skip.Background", "#444444"), CssColor("Match.Skip.Foreground", "#ffff00"),
+                "#808080");
+        }
+
+        /// <summary>
+        /// Looks up a theme brush and returns it as a CSS color; the fallback if it is not a solid color brush.
+        /// </summary>
+        private static string CssColor(string resourceKey, string fallback)
+        {
+            if (Application.Current?.TryFindResource(resourceKey) is SolidColorBrush brush)
+            {
+                Color c = brush.Color;
+                if (c.A == 255)
+                {
+                    return $"#{c.R:x2}{c.G:x2}{c.B:x2}";
+                }
+                return string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                    "rgba({0},{1},{2},{3:0.##})", c.R, c.G, c.B, c.A / 255.0);
+            }
+            return fallback;
         }
 
         private void ProcessCommands(CommandLineArgs args)

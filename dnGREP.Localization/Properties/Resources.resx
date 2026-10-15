@@ -1171,6 +1171,14 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <value>{0} ({1} matches on {2} lines)</value>
     <comment>Main window, search results text: {0} is the partial path and file name; {1} is the number of matches in the file; {2} is the number of lines with matches</comment>
   </data>
+  <data name="Main_ReplaceLog_CountReplacements" xml:space="preserve">
+    <value>{0} replacements on {1} lines</value>
+    <comment>Main window, replacement log header: {0} is the number of replacements in the file; {1} is the number of lines changed</comment>
+  </data>
+  <data name="Main_ReplaceLog_ReplacementSkipped" xml:space="preserve">
+    <value>replacement skipped</value>
+    <comment>Main window, replacement log: shown under a line whose matches were not replaced</comment>
+  </data>
   <data name="Main_ResultList_MatchToolTip1" xml:space="preserve">
     <value>Match {0}{1}{2}</value>
     <comment>Main window results, capture group tooltip: {0} is the match index; {1} is a new line; {2} is text of in the group</comment>

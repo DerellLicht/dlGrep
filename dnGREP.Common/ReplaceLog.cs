@@ -27,6 +27,24 @@ namespace dnGREP.Common
     }
 
     /// <summary>
+    /// What a line in the Results pane represents when it belongs to a replacement log.
+    /// </summary>
+    public enum ReplaceLogLineKind
+    {
+        /// <summary>An ordinary search result line.</summary>
+        None,
+
+        /// <summary>The line as it was.</summary>
+        Old,
+
+        /// <summary>The line as it became.</summary>
+        New,
+
+        /// <summary>An explanatory line, for example "replacement skipped".</summary>
+        Note
+    }
+
+    /// <summary>
     /// A highlighted range inside <see cref="ReplaceLogLine.Text"/>.
     /// </summary>
     public record ReplaceLogSpan(int Start, int Length, ReplaceLogSpanKind Kind);

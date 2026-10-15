@@ -3132,6 +3132,24 @@ namespace dnGREP.Localization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} replacements on {1} lines.
+        /// </summary>
+        public static string Main_ReplaceLog_CountReplacements {
+            get {
+                return ResourceManager.GetString("Main_ReplaceLog_CountReplacements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to replacement skipped.
+        /// </summary>
+        public static string Main_ReplaceLog_ReplacementSkipped {
+            get {
+                return ResourceManager.GetString("Main_ReplaceLog_ReplacementSkipped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Match {0}{1}{2}.
         /// </summary>
         public static string Main_ResultList_MatchToolTip1 {

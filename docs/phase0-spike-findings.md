@@ -86,11 +86,11 @@ One difference from HisGrepship to decide on: those keys are **backgrounds** onl
 
 **Replacement offsets**: the spec asked whether the preview already records the position and length of each replacement in a line. It does not [verified]:
 
-- The preview highlights through `DiffPiece.SubPieces` from the NetDiff library (ReplaceViewHighlighter.cs:168-201), which is a character-level diff between the old and new line, not a list of replacement spans.
+- The preview highlights through `DiffPiece.SubPieces` (ReplaceViewHighlighter.cs:168-201). Those come from `FileDifference.SplitSubPieces`, which diffs the old and new line **word by word** (`SplitWords`, delimiters kept) [verified]. It is a diff of the two lines, not a list of replacement spans.
 - The only place that works out replacement lengths is the long-line chopping code (ReplaceViewModel.cs:375-397). It is an approximation: it ignores the search options and re-runs the regex on the match text alone.
-- A character diff would highlight only the letters that differ. For example, `pargb` to `pre_argb` would highlight only the inserted characters, not the whole replacement text.
+- Because the diff is word-level, whole differing words are highlighted, which is why the preview looks like "whole before / whole after". But the highlight is an artifact of word boundaries: it can over-highlight (a word that merely contains the match) and it can merge or miss adjacent replacements.
 
-So the log builder has to compute its own spans. Section 6 describes how, using only the engine's own output.
+So the log builder computes its own exact spans, which also lets the log mark skipped matches (`Match.Skip.*`) that a diff cannot know about. Section 6 describes how, using only the engine's own output.
 
 ## 5. Gating: Replace button and "Search in results"
 
@@ -179,6 +179,16 @@ This settles the Phase 1 question the spec left open ("approach 1 or 2").
 5. **Resolved:** `docs/dngrep-sar-before-after-spec.md` was Draft 6 in the repo; Draft 7 has now been committed over it.
 6. Where you arrange the Replace window relative to the main window affects how much of the live log you see (section 7, item 9). No action needed now; this is just to keep in mind for the first test build.
 
+### Answers (Derell, 11:43)
+
+1. **Go** on the in-pane log.
+2. Use the existing theme colours for now (backgrounds only). Any theme-layout change would affect both dlGrep and the Theme Editor; revisit after everything else is done.
+3. **Restore the original search results on Cancel** (my call; Derell is fine with it).
+4. GUID tokens: a short note on the log entry.
+5. Resolved.
+6. Not an issue as long as exposed areas repaint when windows are moved (Windows repaints exposed regions; to be confirmed in the first test build). Note the Replace window is modal, so the Results pane cannot be scrolled while it is open: Phase 2 auto-scrolls the newest log entry into view.
+7. Derell does not need the offset details, only that before/after highlighting is reproduced in the Results window.
+
 ## 10. Next step
 
-On a yes to question 1, Phase 1 (builder and writers, with unit tests) can start. It has no UI dependency, so it can begin before any decision on the display details.
+Phase 1 (log model, builder, unit tests). It has no UI dependency. Note: the build environment used by Claude has no .NET SDK, so Phase 1 code is unverified until Derell runs `dotnet test` on Windows.

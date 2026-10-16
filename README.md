@@ -23,7 +23,7 @@ See [Changelog](https://github.com/DerellLicht/dlGrep/blob/master/CHANGELOG.md) 
 License: `dnGrep` uses the GPL 3.0 license; view the file 
 [here](https://github.com/DerellLicht/dlGrep/blob/master/license.txt) 
 
-View a sample of HTML "Replace Log" [report](https://github.com/DerellLicht/dlGrep/blob/master/docs/replace-log.html) here  
+View a sample of HTML "Replace Log" [report](https://derelllicht.github.io/dlGrep/replace-log.html) here  
 
 ![Example of Replace Log pane](https://github.com/DerellLicht/dlGrep/blob/master/docs/dlGrep.replace.log.jpg?raw=true)
 

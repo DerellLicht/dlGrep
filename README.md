@@ -17,8 +17,8 @@ of this log window.
 - Option to save the "Replace Log" with colors as HTML file
 - "Replace Text" dialog has been reduced in size, to hide some operations that I don't ever use.
 
-Here is its [Home page](https://github.com/DerellLicht/dlGrep)  
-Download the [installer](https://github.com/DerellLicht/dnGrep/releases/latest) here  
+Here is `dlGrep`'s [Home page](https://github.com/DerellLicht/dlGrep)  
+Download the [installer](https://github.com/DerellLicht/dlGrep/releases/latest) here  
 See [Changelog](https://github.com/DerellLicht/dlGrep/blob/master/CHANGELOG.md) for the full revision history  
 `dnGrep` uses the GPL 3.0 license; view the file 
 [here](https://github.com/DerellLicht/dlGrep/blob/master/license.txt) 

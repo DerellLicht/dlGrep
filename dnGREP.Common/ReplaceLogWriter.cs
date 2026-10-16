@@ -253,7 +253,7 @@ namespace dnGREP.Common
 
         private static string Quote(string text)
         {
-            return "\"" + text.Replace("\"", "\"\"") + "\"";
+            return "\"" + text.Replace("\"", "\"\"", StringComparison.Ordinal) + "\"";
         }
     }
 }

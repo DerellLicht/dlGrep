@@ -274,3 +274,6 @@ __pycache__/
 images/
 testing/
 testing_ref/
+
+# installer output
+installer/output/

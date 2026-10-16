@@ -1,24 +1,41 @@
-![logo](dnGREP.WPF/Images/dnGrep96.png)
+# dlGrep - dnGrep revisited
 
-Users, see the **[main web site](http://dngrep.github.io/)** to download and install dnGrep.
+A powerful visual Grep program for Windows
 
-This is the source code for dnGrep, a great Windows search utility that allows you to search across text files, Word, Excel and PowerPoint documents, PDFs, and archives using text, regular expression, XPath, and phonetic queries.
+---
+Program summary, from original [dnGrep](https://dngrep.github.io/) utility  
+dnGrep allows you to search across files with easy-to-read results. Search through text files, Word and Excel documents, PDFs, and archives using text, regular expression, XPath, and phonetic queries. dnGrep includes search-and-replace, whole-file preview, right-click search in File Explorer, and much more.
 
-Developers, see the [development documentation](https://github.com/dnGrep/dnGrep/wiki/Developer-Documentation) for info, including about the continuous build and release process.
+---
+`dlGrep` is forked from `dnGrep`, but adds a couple of specific features that I wanted,
+and original author did not want to implement.
 
-### Privacy Policy
-This program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it. 
+New features in `dlGrep`:  
+- A scrollable "Replace Log" window, which shows all "Replace" and "Skip" operations
+that were performed during a "Replace" operation.  See the image below for an example 
+of this log window.  
+- Option to save the "Replace Log" with colors as HTML file
+- "Replace Text" dialog has been reduced in size, to hide some operations that I don't ever use.
 
-The program periodically checks for new versions at github.com, but does not transmit any user information. The version check may be disabled by the user in the dnGrep options.
+Here is its [Home page](https://github.com/DerellLicht/dlGrep)  
+Download the [installer](https://github.com/DerellLicht/dnGrep/releases/latest) here  
+See [Changelog](https://github.com/DerellLicht/dlGrep/blob/master/CHANGELOG.md) for the full revision history  
+`dnGrep` uses the GPL 3.0 license; view the file 
+[here](https://github.com/DerellLicht/dlGrep/blob/master/license.txt) 
 
-### Code Signing Policy
-This program uses free code signing provided by [SignPath.io](https://signpath.io?utm_source=foundation&utm_medium=github&utm_campaign=dngrep), and a certificate by the [SignPath Foundation](https://signpath.org?utm_source=foundation&utm_medium=github&utm_campaign=dngrep).
+![Example of Replace Log pane](https://github.com/DerellLicht/dlGrep/blob/master/docs/dlGrep.replace.log.jpg?raw=true)
 
-Starting with v3.0, the dnGrep MSI installers and binary files are signed. Code signing is applied only to dnGrep project code in the [dnGrep git repository](https://github.com/dnGrep/dnGrep) release branch and built on AppVeyor.  The dnGrep install kit contains third-party libraries used by dnGrep, which may or may not be signed.  
+---
+Notes on this revisited version of `dlGrep` ...  
+I did the design specification, testing, and guidance on the revisions in this fork of the program.
 
-### Translate
-You can [translate dnGrep on Hosted Weblate](https://hosted.weblate.org/engage/dngrep/).  
-You can always add other languages.\
-[![Translation status](https://hosted.weblate.org/widgets/dngrep/-/multi-auto.svg)](https://hosted.weblate.org/engage/dngrep/?utm_source=widget)
+However: [Claude AI](https://claude.ai/new) did *all* of the coding and interpretation of the existing code.
+Claude is truly amazing; he implements complex designs in seconds, and they generally 
+do exactly what was requested... but debugging and analysis still require a human.
+The two of us together, can do almost *anything* !!
 
-See [Translate dnGrep](https://github.com/dnGrep/dnGrep/wiki/Translate-dnGrep) for more information. 
+---
+This program is derived from, and expands upon, 
+[dnGrep](https://dngrep.github.io/),
+created by 
+[@doug24](href="https://github.com/doug24")  

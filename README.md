@@ -20,8 +20,10 @@ of this log window.
 Here is `dlGrep`'s [Home page](https://github.com/DerellLicht/dlGrep)  
 Download the [installer](https://github.com/DerellLicht/dlGrep/releases/latest) here  
 See [Changelog](https://github.com/DerellLicht/dlGrep/blob/master/CHANGELOG.md) for the full revision history  
-`dnGrep` uses the GPL 3.0 license; view the file 
+License: `dnGrep` uses the GPL 3.0 license; view the file 
 [here](https://github.com/DerellLicht/dlGrep/blob/master/license.txt) 
+
+View a sample of HTML "Replace Log" [report](https://github.com/DerellLicht/dlGrep/blob/master/docs/replace-log.html) here  
 
 ![Example of Replace Log pane](https://github.com/DerellLicht/dlGrep/blob/master/docs/dlGrep.replace.log.jpg?raw=true)
 

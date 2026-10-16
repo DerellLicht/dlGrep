@@ -4,7 +4,7 @@
 #   make test       build, then run the unit tests
 #   make run        build, then start dlGrep
 #   make installer  build a Release exe, then the Inno Setup installer
-#   make install    run the installer that "make installer" built (does not build anything)
+#   make install    install silently with the setup that "make installer" built (builds nothing)
 #   make version    show the version (the newest "## [x.yy]" header in CHANGELOG.md)
 #   make dist       installer, zipped for upload
 #   make release    first release of this version: tag, push, create the GitHub release
@@ -61,7 +61,7 @@ help:
 	@echo "make test    build, then run the unit tests"
 	@echo "make run     build, then start $(APP)"
 	@echo "make installer  build a Release exe and the installer ($(SETUP))"
-	@echo "make install    run the installer built by 'make installer' (builds nothing)"
+	@echo "make install    install the built setup silently, no questions (builds nothing)"
 	@echo "make version    show the version from CHANGELOG.md ($(VERSION))"
 	@echo "make dist       the installer, zipped for upload"
 	@echo "make release    first release of $(TAG): tag, push, GitHub release"
@@ -98,9 +98,11 @@ installer: build
 	"$(ISCC)" /Qp /DMyAppVersion=$(VERSION) installer/dlGrep.iss
 
 # Only runs the setup program that "make installer" already built; it does not build anything.
+# Silent: no wizard and no questions (an open dlGrep is closed first).  Setup then does not offer
+# to start dlGrep; use "make run" or the Start Menu.
 install:
 	@test -f "$(SETUP)" || { echo "$(SETUP) not found -- run 'make installer' first."; exit 1; }
-	cmd /c start "" "$(subst /,\,$(SETUP))"
+	"$(SETUP)" /SILENT /SUPPRESSMSGBOXES /NORESTART
 
 version:
 	@echo $(VERSION)

@@ -275,6 +275,7 @@ images/
 testing/
 testing_ref/
 Makefile.zip
+gitlog.md
 
 # installer output
 installer/output/

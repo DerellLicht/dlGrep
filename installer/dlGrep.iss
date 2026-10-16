@@ -1,7 +1,8 @@
 ; Inno Setup script for dlGrep.  Modeled on the PrettyReMark installer.
-; Build it with "make installer" (which builds the Release exe first), or compile it by hand:
-;   D:\InnoSetup7\iscc.exe installer\dlGrep.iss
-; Output: installer\output\dlGrep.setup.exe
+; Build it with "make installer" (which builds the Release exe first and passes the version
+; from CHANGELOG.md), or compile it by hand:
+;   D:\InnoSetup7\iscc.exe /DMyAppVersion=1.00 installer\dlGrep.iss
+; Output: installer\output\dlGrepV<version>.setup.exe
 
 #define MyAppName "dlGrep"
 #define MyAppPublisher "Derell Licht"
@@ -13,10 +14,9 @@
 #ifndef BuildDir
 #define BuildDir RepoRoot + "\dnGREP.WPF\bin\x64\Release\net10.0-windows"
 #endif
-; version comes from the built exe ("1.0.0.0"): drop the fourth part
-#define FullVersion GetVersionNumbersString(BuildDir + "\" + MyAppExeName)
+; The version is set only in CHANGELOG.md; the Makefile passes it in as /DMyAppVersion=x.yy.
 #ifndef MyAppVersion
-#define MyAppVersion Copy(FullVersion, 1, RPos(".", FullVersion) - 1)
+#error MyAppVersion is not defined: build with "make installer", or pass /DMyAppVersion=x.yy (the newest version in CHANGELOG.md)
 #endif
 
 [Setup]
@@ -40,7 +40,7 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 LicenseFile={#RepoRoot}\license.txt
 OutputDir=output
-OutputBaseFilename={#MyAppName}.setup
+OutputBaseFilename={#MyAppName}V{#MyAppVersion}.setup
 SolidCompression=yes
 WizardStyle=modern slate
 ; close a running dlGrep before replacing its files, and restart nothing

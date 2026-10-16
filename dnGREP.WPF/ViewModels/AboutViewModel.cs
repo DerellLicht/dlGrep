@@ -47,7 +47,25 @@ namespace dnGREP.WPF
         private string _description = string.Empty;
 
 
-        public static string AssemblyVersion => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? string.Empty;
+        /// <summary>
+        /// The version as it is written in CHANGELOG.md (for example "1.00"), which the build
+        /// stores in the assembly's informational version.  Anything after a '+' (a source
+        /// revision some tools append) is dropped.  Falls back to the four-part assembly version.
+        /// </summary>
+        public static string AssemblyVersion
+        {
+            get
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string? info = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+                if (!string.IsNullOrWhiteSpace(info))
+                {
+                    int plus = info.IndexOf('+', StringComparison.Ordinal);
+                    return plus >= 0 ? info[..plus] : info;
+                }
+                return assembly.GetName().Version?.ToString() ?? string.Empty;
+            }
+        }
 
         public static string AssemblyDescription
         {

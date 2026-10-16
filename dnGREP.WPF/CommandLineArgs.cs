@@ -942,7 +942,7 @@ namespace dnGREP.WPF
 
         public static string GetHelpString()
         {
-            string assemblyVersion = Assembly.GetExecutingAssembly()?.GetName()?.Version?.ToString() ?? string.Empty;
+            string assemblyVersion = AboutViewModel.AssemblyVersion;
             string buildDate = AboutViewModel.AssemblyBuildDate?.ToString(CultureInfo.CurrentCulture) ?? string.Empty;
 
             StringBuilder sb = new();

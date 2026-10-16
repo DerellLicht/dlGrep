@@ -271,7 +271,7 @@
     <ValencianFiles Include="$(SolutionDir)\dnGREP.WPF\bin\$(Platform)\$(Configuration)\$(TargetFramework)\ca-ES-valencia\dnGREP.Localization.resources.dll" />
   </ItemGroup>
   <ItemGroup>
-    <SparsePackageFiles Include="$(SolutionDir)\dnGREP.ContextMenu\bin\$(Platform)\$(Configuration)\dnGREP.ContextMenu.dll" />
+    <!-- dlGrep does not build or ship the Explorer context-menu DLL (dnGREP.ContextMenu), so it is not copied; a missing file here failed the Release build -->
     <SparsePackageFiles Include="$(SolutionDir)\dnGREP.WPF\nGrep.ico" />
     <SparsePackageFiles Include="$(SolutionDir)\dnGREP.msix" />
   </ItemGroup>

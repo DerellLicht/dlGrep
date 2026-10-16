@@ -61,19 +61,19 @@ namespace Tests
         }
 
         [Fact]
-        public void TextShowsSkippedLineOnceWithNote()
+        public void TextShowsSkippedLineAsBeforeAndAfter()
         {
             ReplaceLogFile log = Build("one foo\n", "foo", "quux");
 
             string text = ReplaceLogWriter.ToText([log], info);
 
-            Assert.Contains("  1: one foo", text);
-            Assert.Contains("replacement skipped", text);
-            Assert.DoesNotContain("+ 1:", text);
+            Assert.Contains("- 1: one foo", text);
+            Assert.Contains("+ 1: one foo", text);
+            Assert.DoesNotContain("replacement skipped", text);
         }
 
         [Fact]
-        public void CsvQuotesTextAndLeavesNewEmptyWhenSkipped()
+        public void CsvQuotesTextAndRepeatsOldTextWhenSkipped()
         {
             ReplaceLogFile replaced = Build("say \"hi\", foo\n", "foo", "quux", 0);
             ReplaceLogFile skipped = Build("one foo\n", "foo", "quux");
@@ -83,7 +83,7 @@ namespace Tests
 
             Assert.Equal("File,Line,Replacements,Left alone,Old text,New text", rows[0]);
             Assert.Equal("\"c:\\src\\test.txt\",1,1,0,\"say \"\"hi\"\", foo\",\"say \"\"hi\"\", quux\"", rows[1]);
-            Assert.Equal("\"c:\\src\\test.txt\",1,0,1,\"one foo\",\"\"", rows[2]);
+            Assert.Equal("\"c:\\src\\test.txt\",1,0,1,\"one foo\",\"one foo\"", rows[2]);
         }
 
         [Fact]

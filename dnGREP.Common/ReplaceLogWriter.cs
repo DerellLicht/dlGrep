@@ -55,14 +55,12 @@ namespace dnGREP.Common
 
                 int width = NumberWidth(file);
                 foreach (ReplaceLogEntry entry in file.Entries) {
-                    // an entry with nothing replaced shows its line once, with no sign
-                    AppendTextLines(sb, entry.IsReplaced ? '-' : ' ', entry.OldLines, width);
-                    AppendTextLines(sb, '+', entry.NewLines, width);
+                    // an entry with nothing replaced shows the same line as "was" and as "became",
+                    // as the Results pane does; the skipped matches are the only difference in meaning
+                    AppendTextLines(sb, '-', entry.OldLines, width);
+                    AppendTextLines(sb, '+', entry.IsReplaced ? entry.NewLines : entry.OldLines, width);
 
-                    if (!entry.IsReplaced) {
-                        sb.AppendLine("      replacement skipped");
-                    }
-                    else if (entry.SkippedCount > 0) {
+                    if (entry.IsReplaced && entry.SkippedCount > 0) {
                         sb.Append("      ").Append(entry.SkippedCount)
                           .AppendLine(entry.SkippedCount == 1 ? " other match on this line was left alone"
                                                               : " other matches on this line were left alone");
@@ -82,7 +80,7 @@ namespace dnGREP.Common
 
         /// <summary>
         /// The log as csv, one row per affected line: file, line number, counts, the old text and
-        /// the new text (empty when nothing on the line was replaced).  Text containing line breaks
+        /// the new text (the same as the old text when nothing on the line was replaced).  Text containing line breaks
         /// is quoted, with the lines joined by a line feed.
         /// </summary>
         /// <param name="files">the log, one item per file</param>
@@ -94,7 +92,7 @@ namespace dnGREP.Common
             foreach (ReplaceLogFile file in files) {
                 foreach (ReplaceLogEntry entry in file.Entries) {
                     string oldText = string.Join("\n", entry.OldLines.Select(l => l.Text));
-                    string newText = entry.IsReplaced ? string.Join("\n", entry.NewLines.Select(l => l.Text)) : string.Empty;
+                    string newText = string.Join("\n", (entry.IsReplaced ? entry.NewLines : entry.OldLines).Select(l => l.Text));
                     sb.Append(Quote(file.FileName)).Append(',')
                       .Append(entry.LineNumber).Append(',')
                       .Append(entry.ReplacementCount).Append(',')
@@ -153,13 +151,10 @@ namespace dnGREP.Common
                 int width = NumberWidth(file);
                 foreach (ReplaceLogEntry entry in file.Entries) {
                     sb.AppendLine("<div class=\"entry\">");
-                    AppendHtmlLines(sb, entry.IsReplaced ? '-' : ' ', entry.OldLines, width, "old");
-                    AppendHtmlLines(sb, '+', entry.NewLines, width, "new");
+                    AppendHtmlLines(sb, '-', entry.OldLines, width, "old");
+                    AppendHtmlLines(sb, '+', entry.IsReplaced ? entry.NewLines : entry.OldLines, width, "new");
 
-                    if (!entry.IsReplaced) {
-                        sb.AppendLine("<div class=\"note\">replacement skipped</div>");
-                    }
-                    else if (entry.SkippedCount > 0) {
+                    if (entry.IsReplaced && entry.SkippedCount > 0) {
                         sb.Append("<div class=\"note\">").Append(entry.SkippedCount)
                           .AppendLine(entry.SkippedCount == 1 ? " other match on this line was left alone</div>"
                                                               : " other matches on this line were left alone</div>");

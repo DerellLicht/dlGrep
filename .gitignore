@@ -274,6 +274,7 @@ __pycache__/
 images/
 testing/
 testing_ref/
+Makefile.zip
 
 # installer output
 installer/output/

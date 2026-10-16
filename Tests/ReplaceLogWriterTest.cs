@@ -56,7 +56,7 @@ namespace Tests
             Assert.Contains("+ 1: one quux", text);
             Assert.Contains("- 2: two foo bar foo", text);
             Assert.Contains("+ 2: two quux bar foo", text);
-            Assert.Contains("1 other match on this line was left alone", text);
+            Assert.DoesNotContain("other match", text);
             Assert.DoesNotContain("\t", text);
         }
 

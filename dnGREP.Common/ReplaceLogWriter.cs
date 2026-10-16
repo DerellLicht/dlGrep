@@ -56,15 +56,10 @@ namespace dnGREP.Common
                 int width = NumberWidth(file);
                 foreach (ReplaceLogEntry entry in file.Entries) {
                     // an entry with nothing replaced shows the same line as "was" and as "became",
-                    // as the Results pane does; the skipped matches are the only difference in meaning
+                    // as the Results pane does; the highlighting alone shows which matches were left alone
                     AppendTextLines(sb, '-', entry.OldLines, width);
                     AppendTextLines(sb, '+', entry.IsReplaced ? entry.NewLines : entry.OldLines, width);
 
-                    if (entry.IsReplaced && entry.SkippedCount > 0) {
-                        sb.Append("      ").Append(entry.SkippedCount)
-                          .AppendLine(entry.SkippedCount == 1 ? " other match on this line was left alone"
-                                                              : " other matches on this line were left alone");
-                    }
                     if (!string.IsNullOrEmpty(entry.Note)) {
                         sb.Append("      ").AppendLine(entry.Note);
                     }
@@ -154,11 +149,6 @@ namespace dnGREP.Common
                     AppendHtmlLines(sb, '-', entry.OldLines, width, "old");
                     AppendHtmlLines(sb, '+', entry.IsReplaced ? entry.NewLines : entry.OldLines, width, "new");
 
-                    if (entry.IsReplaced && entry.SkippedCount > 0) {
-                        sb.Append("<div class=\"note\">").Append(entry.SkippedCount)
-                          .AppendLine(entry.SkippedCount == 1 ? " other match on this line was left alone</div>"
-                                                              : " other matches on this line were left alone</div>");
-                    }
                     if (!string.IsNullOrEmpty(entry.Note)) {
                         sb.Append("<div class=\"note\">").Append(Enc(entry.Note)).AppendLine("</div>");
                     }

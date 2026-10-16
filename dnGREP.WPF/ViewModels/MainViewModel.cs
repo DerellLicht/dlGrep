@@ -408,6 +408,8 @@ namespace dnGREP.WPF
                 return;
             }
 
+            RaiseLogMenuStateChanged();
+
             if (ResultsViewModel.IsLogDisplayed) {
                 if (!logForcedMaximize) {
                     maximizedBeforeLog = IsResultTreeMaximized;

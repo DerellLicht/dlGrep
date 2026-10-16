@@ -203,6 +203,13 @@ namespace dnGREP.WPF
             }
         }
 
+        /// <summary>
+        /// Moves to the next match, going on to the first match of the next file after the last
+        /// match of a file.  When there is no next match anywhere, the review is complete: the
+        /// current (last) match stays selected, <see cref="ReviewComplete"/> is set so the window
+        /// can say so, and ReplaceMatch is raised so the replacement log counts that last match
+        /// as decided (it would not otherwise, since the selection does not change).
+        /// </summary>
         private void SelectNextMatch()
         {
             if (SelectedSearchResult != null && IndividualReplaceEnabled)
@@ -212,9 +219,14 @@ namespace dnGREP.WPF
                     matchIndex++;
                     SelectedGrepMatch = SelectedSearchResult.Matches[matchIndex];
                 }
-                else
+                else if (SearchResults != null && fileIndex < SearchResults.Count - 1)
                 {
                     SelectNextFile();
+                }
+                else
+                {
+                    ReviewComplete = true;
+                    ReplaceMatch?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -591,10 +603,22 @@ namespace dnGREP.WPF
 
         public GrepSearchOption SearchOptions { get; set; }
 
+        /// <summary>
+        /// True after the user has moved past the last match of the last file.  Cleared when the
+        /// selection moves to another match, or the last match's mark is undone.
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(ReviewCompleteMessage))]
+        private bool reviewComplete;
+
+        public string ReviewCompleteMessage => ReviewComplete ? Resources.Replace_LastMatchReached : string.Empty;
+
         [ObservableProperty]
         private GrepMatch? selectedGrepMatch = null;
         partial void OnSelectedGrepMatchChanged(GrepMatch? value)
         {
+            ReviewComplete = false;
+
             if (SelectedGrepMatch != null && SelectedSearchResult != null)
             {
                 var lineMatch = SelectedSearchResult.SearchResults
@@ -774,6 +798,7 @@ namespace dnGREP.WPF
 
         private void UndoMarkMatchForReplace()
         {
+            ReviewComplete = false;
             if (SelectedGrepMatch != null)
             {
                 SelectedGrepMatch.ReplaceMatch = false;
@@ -806,7 +831,7 @@ namespace dnGREP.WPF
         private RelayCommand? nextMatchCommand;
         public RelayCommand NextMatchCommand => nextMatchCommand ??= new RelayCommand(
             p => SelectNextMatch(),
-            q => SelectedSearchResult != null && SelectedSearchResult.Matches.Count > 1 && IndividualReplaceEnabled);
+            q => SelectedSearchResult != null && IndividualReplaceEnabled && !ReviewComplete);
 
         private RelayCommand? replaceAllInFileCommand;
         public RelayCommand ReplaceAllInFileCommand => replaceAllInFileCommand ??= new RelayCommand(

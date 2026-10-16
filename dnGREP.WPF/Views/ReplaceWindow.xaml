@@ -170,6 +170,9 @@
                             Command="{Binding ReplaceAllCommand}"
                             ToolTip="{Binding ReplaceAllCommandToolTip}"
                             Style="{StaticResource ReplaceButton}"/>
+                    <TextBlock Margin="24,0,0,0" VerticalAlignment="Center" FontWeight="Medium"
+                               Text="{Binding ReviewCompleteMessage}"
+                               Visibility="{Binding ReviewComplete, Converter={StaticResource BoolToVisibilityConverter}}"/>
                 </StackPanel>
             </Grid>
 

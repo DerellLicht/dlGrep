@@ -2455,6 +2455,10 @@ dlGrep "C:\Program Files\dlGrep" t\w*t</value>
     <value>Move to the previous match in this file</value>
     <comment>Replace window, Previous button tooltip</comment>
   </data>
+  <data name="Replace_LastMatchReached" xml:space="preserve">
+    <value>Last match reached: click OK to apply</value>
+    <comment>Replace window, shown after the last match has been replaced or skipped</comment>
+  </data>
   <data name="Replace_Continue" xml:space="preserve">
     <value>_Continue</value>
     <comment>Replace window, Continue button label (accel): replaces the current match and all the matches after it, then closes the window</comment>

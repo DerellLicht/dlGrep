@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>dlGrep Replace Log</title>
+<style>
+body { background: #1e1e1e; color: #8cc88c; margin: 1em 2em; }
+pre, .line { font-family: Consolas, 'Courier New', monospace; white-space: pre; margin: 0; }
+h1 { font-family: sans-serif; font-size: 1.4em; }
+.file { font-family: Consolas, 'Courier New', monospace; font-weight: bold; margin-top: 1.5em; border-top: 1px solid gray; padding-top: 0.5em; }
+.entry { margin: 0.6em 0 0.6em 1em; }
+.num { color: #808080; }
+.old { background: #945900; }
+.new { background: #007878; }
+.skip { background: #8a0000; color: #ffffff; }
+.note { font-style: italic; margin-left: 4em; }
+</style>
+</head>
+<body>
+<h1>dlGrep Replace Log</h1>
+<pre>Friday, October 16, 2026 08:27:40</pre>
+<pre>
+Search for: &#39;uint&#39;
+Using Text search
+Case sensitive, Whole word
+
+Search in: D:\SourceCode\Git\dlGrep\testing
+Include file pattern: *.cpp;*.h;*.rc
+No symbolic links
+Replace with: 'uint32_t'
+Replaced 16 matches on 11 lines in 2 files (6 left alone)
+</pre>
+<div class="file">D:\SourceCode\Git\dlGrep\testing\common.h</div>
+<pre>has 5 replacements on 4 lines (4 left alone):</pre>
+<div class="entry">
+<div class="line"><span class="num">-  18: </span>// typedef  unsigned int         <span class="old">uint</span> ;</div>
+<div class="line"><span class="num">+  18: </span>// typedef  unsigned int         <span class="new">uint32_t</span> ;</div>
+</div>
+<div class="entry">
+<div class="line"><span class="num">-  27: </span>using <span class="old">uint</span> = unsigned int ;</div>
+<div class="line"><span class="num">+  27: </span>using <span class="new">uint32_t</span> = unsigned int ;</div>
+</div>
+<div class="entry">
+<div class="line"><span class="num">- 107: </span>inline void delay_ms(<span class="skip">uint</span> msec)</div>
+<div class="line"><span class="num">+ 107: </span>inline void delay_ms(<span class="skip">uint</span> msec)</div>
+</div>
+<div class="entry">
+<div class="line"><span class="num">- 151: </span><span class="old">uint</span> uabs(<span class="skip">uint</span> uvalue1, <span class="old">uint</span> uvalue2);</div>
+<div class="line"><span class="num">+ 151: </span><span class="new">uint32_t</span> uabs(<span class="skip">uint</span> uvalue1, <span class="new">uint32_t</span> uvalue2);</div>
+</div>
+<div class="entry">
+<div class="line"><span class="num">- 164: </span>TCHAR *secs_to_date_time_str(<span class="skip">uint</span> total_seconds, TCHAR *dest);</div>
+<div class="line"><span class="num">+ 164: </span>TCHAR *secs_to_date_time_str(<span class="skip">uint</span> total_seconds, TCHAR *dest);</div>
+</div>
+<div class="entry">
+<div class="line"><span class="num">- 169: </span><span class="skip">uint</span> swap_rgb(<span class="old">uint</span> invalue);</div>
+<div class="line"><span class="num">+ 169: </span><span class="skip">uint</span> swap_rgb(<span class="new">uint32_t</span> invalue);</div>
+</div>
+<div class="file">D:\SourceCode\Git\dlGrep\testing\common_funcs.cpp</div>
+<pre>has 11 replacements on 7 lines (2 left alone):</pre>
+<div class="entry">
+<div class="line"><span class="num">- 137: </span>   <span class="old">uint</span> drive_mask = 1U &lt;&lt; (<span class="skip">uint</span>) (drive_letter - &#39;a&#39;) ; //lint !e571</div>
+<div class="line"><span class="num">+ 137: </span>   <span class="new">uint32_t</span> drive_mask = 1U &lt;&lt; (<span class="skip">uint</span>) (drive_letter - &#39;a&#39;) ; //lint !e571</div>
+</div>
+<div class="entry">
+<div class="line"><span class="num">- 211: </span><span class="old">uint</span> swap_rgb(<span class="old">uint</span> invalue)</div>
+<div class="line"><span class="num">+ 211: </span><span class="new">uint32_t</span> swap_rgb(<span class="new">uint32_t</span> invalue)</div>
+</div>
+<div class="entry">
+<div class="line"><span class="num">- 256: </span>char *secs_to_date_time_str(<span class="old">uint</span> total_seconds, char *dest)</div>
+<div class="line"><span class="num">+ 256: </span>char *secs_to_date_time_str(<span class="new">uint32_t</span> total_seconds, char *dest)</div>
+</div>
+<div class="entry">
+<div class="line"><span class="num">- 259: </span>   <span class="skip">uint</span> secs {}, mins {}, hours {} ;</div>
+<div class="line"><span class="num">+ 259: </span>   <span class="skip">uint</span> secs {}, mins {}, hours {} ;</div>
+</div>
+<div class="entry">
+<div class="line"><span class="num">- 579: </span>         _stprintf(msg, _T(&quot;FormatMessage() failed: [%u], errcode %d&quot;), (<span class="old">uint</span>) GetLastError(), result) ;</div>
+<div class="line"><span class="num">+ 579: </span>         _stprintf(msg, _T(&quot;FormatMessage() failed: [%u], errcode %d&quot;), (<span class="new">uint32_t</span>) GetLastError(), result) ;</div>
+</div>
+<div class="entry">
+<div class="line"><span class="num">- 583: </span>      _stprintf(msg, _T(&quot;NULL buffer in response from FormatMessage() [%u]&quot;), (<span class="old">uint</span>) GetLastError()) ;</div>
+<div class="line"><span class="num">+ 583: </span>      _stprintf(msg, _T(&quot;NULL buffer in response from FormatMessage() [%u]&quot;), (<span class="new">uint32_t</span>) GetLastError()) ;</div>
+</div>
+<div class="entry">
+<div class="line"><span class="num">- 629: </span>   <span class="old">uint</span> ecode = (<span class="old">uint</span>) (error_code &lt; 0) ? -error_code : error_code ; //lint !e732</div>
+<div class="line"><span class="num">+ 629: </span>   <span class="new">uint32_t</span> ecode = (<span class="new">uint32_t</span>) (error_code &lt; 0) ? -error_code : error_code ; //lint !e732</div>
+</div>
+<div class="entry">
+<div class="line"><span class="num">- 794: </span><span class="old">uint</span> uabs(<span class="old">uint</span> uvalue1, <span class="old">uint</span> uvalue2)</div>
+<div class="line"><span class="num">+ 794: </span><span class="new">uint32_t</span> uabs(<span class="new">uint32_t</span> uvalue1, <span class="new">uint32_t</span> uvalue2)</div>
+</div>
+</body>
+</html>

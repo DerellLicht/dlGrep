@@ -3132,6 +3132,96 @@ namespace dnGREP.Localization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} replacements on {1} lines.
+        /// </summary>
+        public static string Main_ReplaceLog_CountReplacements {
+            get {
+                return ResourceManager.GetString("Main_ReplaceLog_CountReplacements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} replacements on {1} lines; {2} skipped.
+        /// </summary>
+        public static string Main_ReplaceLog_CountReplacementsSkipped {
+            get {
+                return ResourceManager.GetString("Main_ReplaceLog_CountReplacementsSkipped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace log: {0} replacements, {1} skipped, on {2} lines in {3} files.
+        /// </summary>
+        public static string Main_ReplaceLog_StatusSummary {
+            get {
+                return ResourceManager.GetString("Main_ReplaceLog_StatusSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTML page.
+        /// </summary>
+        public static string Main_ReportOption_HtmlFileFormat {
+            get {
+                return ResourceManager.GetString("Main_ReportOption_HtmlFileFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace log as HTML.
+        /// </summary>
+        public static string Main_MoreMenu_Save_HtmlLog {
+            get {
+                return ResourceManager.GetString("Main_MoreMenu_Save_HtmlLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace Log.
+        /// </summary>
+        public static string Main_ReplaceLog_Title {
+            get {
+                return ResourceManager.GetString("Main_ReplaceLog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to replacement skipped.
+        /// </summary>
+        public static string Main_ReplaceLog_ReplacementSkipped {
+            get {
+                return ResourceManager.GetString("Main_ReplaceLog_ReplacementSkipped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last match reached: click OK to apply.
+        /// </summary>
+        public static string Replace_LastMatchReached {
+            get {
+                return ResourceManager.GetString("Replace_LastMatchReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Continue.
+        /// </summary>
+        public static string Replace_Continue {
+            get {
+                return ResourceManager.GetString("Replace_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace the current match and every match after it, in this file and all later files, then apply. Matches you already replaced or skipped are left as they are..
+        /// </summary>
+        public static string Replace_ContinueToolTip {
+            get {
+                return ResourceManager.GetString("Replace_ContinueToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Match {0}{1}{2}.
         /// </summary>
         public static string Main_ResultList_MatchToolTip1 {

@@ -11,7 +11,7 @@
                  FontSize="{Binding DialogFontSize}"
                  Height="500"
                  MinWidth="500"
-                 Icon="/dnGREP;component/nGREP.ico"
+                 Icon="/dlGrep;component/nGREP.ico"
                  ResizeMode="NoResize"
                  SizeToContent="Width"
                  WindowStartupLocation="CenterOwner"
@@ -46,7 +46,7 @@
             <Border Grid.Row="0" Grid.RowSpan="4" Grid.Column="0"
                 Margin="8" Background="#80ffffff" CornerRadius="12">
                 <Image Width="72" Height="72" Margin="8"
-                   Source="/dnGREP;component/Images/dnGrep96.png" />
+                   Source="/dlGrep;component/Images/dnGrep96.png" />
             </Border>
 
             <StackPanel Grid.Row="0" Grid.Column="1"  Orientation="Horizontal">
@@ -54,7 +54,7 @@
                        FontSize="{Binding DialogFontSize, Converter={StaticResource TitleSizeConverter}, ConverterParameter=2, FallbackValue=14}" 
                        Style="{StaticResource ThemedTextBlock}"/>
                 <TextBlock Style="{StaticResource ThemedTextBlock}" Margin="30,0,0,0">
-                <Hyperlink NavigateUri="http://dngrep.github.io/" RequestNavigate="Hyperlink_RequestNavigate">
+                <Hyperlink NavigateUri="https://github.com/DerellLicht/dlGrep" RequestNavigate="Hyperlink_RequestNavigate">
                     <TextBlock Text="{l:Loc Key='About_DnGrepOnGitHub'}"/>
                 </Hyperlink>
                 </TextBlock>
@@ -68,7 +68,7 @@
                         Background="#B0ffffff" CornerRadius="2">
                     <Button Command="{Binding CopyVersionCommand}"
                             Background="Transparent" BorderBrush="Transparent">
-                        <Image Source="/dnGREP;component/Images/copy.png" Stretch="Uniform"/>
+                        <Image Source="/dlGrep;component/Images/copy.png" Stretch="Uniform"/>
                     </Button>
                 </Border>
                     
@@ -126,7 +126,7 @@
                     <TextBlock Text="{l:Loc Key='About_LibraryForReadingArchiveFiles'}" Style="{StaticResource Decription}"/>
                 </TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource ThemedTextBlock}">
-                    <Hyperlink NavigateUri="https://github.com/dnGrep/dnGrep/tree/master/SevenZip/" RequestNavigate="Hyperlink_RequestNavigate">
+                    <Hyperlink NavigateUri="https://github.com/DerellLicht/dlGrep/tree/HEAD/SevenZip/" RequestNavigate="Hyperlink_RequestNavigate">
                         <TextBlock Text="SevenZipSharp"/>
                     </Hyperlink>
                     <TextBlock Text="{l:Loc Key='About_NETLibraryFor7Zip'}" Style="{StaticResource Decription}"/>

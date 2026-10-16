@@ -1,0 +1,3 @@
+Makefile text eol=lf
+*.mak text eol=lf
+*.py text eol=lf

@@ -54,7 +54,7 @@ After a replace, the Results pane shows a record of what was done, in the same s
 ### R1. Live log while the Replace window is open
 
 - The log is built as the user works in the Replace window, so every decision is visible in the main window's Results pane.
-- The first log entry clears the search results in the Results pane. If the window is closed before any entry exists, the search results stay as they were.
+- The Results pane becomes the log as soon as the Replace window opens: the search results are saved and the pane is emptied (Derell, Oct 15; replaces "the first log entry clears the search results"). Closing the window with anything other than OK puts the saved search results back, and all marks are cleared.
 - One entry per match, created or updated whenever its state is decided:
   - Replace gives a "replaced" entry.
   - Next without marking gives a "replacement skipped" entry.
@@ -62,7 +62,7 @@ After a replace, the Results pane shows a record of what was done, in the same s
   - The bulk buttons (Replace in file where present, Replace the rest) add or update entries for every match they mark.
   - File headers appear as the user reaches each file.
 - **OK:** the marked matches are written to disk (`ExecuteReplace`) and the log stays in the Results pane.
-- **Cancel, Escape, closing the window, or anything other than OK:** nothing is written, the log is cleared, and the Results pane stays blank until the next search.
+- **Cancel, Escape, closing the window, or anything other than OK:** nothing is written, the log is cleared, the marks are cleared, and the saved search results are put back in the Results pane (Derell, Oct 15, findings answer 3).
 
 ### R2. Log content and format
 

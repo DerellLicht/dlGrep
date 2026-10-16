@@ -91,7 +91,7 @@ namespace dnGREP.Common
             }
             else
             {
-                string dataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "dnGREP");
+                string dataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "dlGrep");
                 if (!Directory.Exists(dataFolder))
                     Directory.CreateDirectory(dataFolder);
                 return dataFolder;
@@ -168,7 +168,7 @@ namespace dnGREP.Common
 
         public bool IsApplicationDirectory(string path)
         {
-            return Directory.GetFiles(path, "dnGREP.exe").Length > 0 &&
+            return Directory.GetFiles(path, "dlGrep.exe").Length > 0 &&
                  Directory.GetFiles(path, "*.dll").Length > 0;
         }
 

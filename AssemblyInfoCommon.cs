@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 
 // AssemblyCompany name is used for AppData\Local\ directory name
-[assembly: AssemblyCompany("dnGrep")]
-[assembly: AssemblyProduct("dnGREP")]
-[assembly: AssemblyCopyright("Copyright 2013, 2026 dnGrep Community Contributors")]
+[assembly: AssemblyCompany("dlGrep")]
+[assembly: AssemblyProduct("dlGrep")]
+[assembly: AssemblyCopyright("Copyright 2013, 2026 dnGrep Community Contributors; modifications 2026 Derell Licht")]
 [assembly: ComVisible(false)]

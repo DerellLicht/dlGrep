@@ -19,7 +19,7 @@
                  ResizeMode="CanResize"
                  ShowInTaskbar="True"
                  KeyDown="Window_KeyDown"
-                 Icon="/dnGREP;component/nGREP.ico"
+                 Icon="/dlGrep;component/nGREP.ico"
                  mc:Ignorable="d"
                  my:InputBindingsBehavior.InputBindings="{Binding InputBindings}">
 

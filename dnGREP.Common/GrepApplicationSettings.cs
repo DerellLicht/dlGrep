@@ -182,7 +182,8 @@ namespace dnGREP.Common
             public const string MainWindowState = "MainWindowState";
             public const string MainWindowBounds = "MainWindowBounds";
             public const string OptionsBounds = "OptionsBounds";
-            public const string ReplaceBounds = "ReplaceBounds";
+            // key renamed (was "ReplaceBounds") so the saved size of the old, taller dialog is dropped once
+            public const string ReplaceBounds = "ReplaceBounds2";
             public const string PreviewBounds = "PreviewBounds";
             public const string PreviewWindowState = "PreviewWindowState";
             public const string PreviewDocked = "PreviewDocked";

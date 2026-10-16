@@ -2,4 +2,23 @@
   <PropertyGroup>
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
   </PropertyGroup>
+
+  <!--
+    Version number: the newest "## [x.yy]" header in CHANGELOG.md is the only place it is set.
+    The Makefile reads the same header for the installer and the GitHub release.
+    DlGrepVersion      the text as written in the changelog, for example 1.00 (shown to the user)
+    DlGrepNumeric      the same number without leading zeros, for example 1.0 (assembly versions)
+    If the changelog is missing or has no such header the version is 0.0.
+  -->
+  <PropertyGroup>
+    <ChangelogFile>$(MSBuildThisFileDirectory)CHANGELOG.md</ChangelogFile>
+    <DlGrepVersion Condition="Exists('$(ChangelogFile)')">$([System.Text.RegularExpressions.Regex]::Replace($([System.IO.File]::ReadAllText('$(ChangelogFile)')), '(?s)^(?:.*?\n)?## \[(\d+\.\d+)\].*', '$1'))</DlGrepVersion>
+    <DlGrepVersion Condition="'$(DlGrepVersion)' == '' Or !$([System.Text.RegularExpressions.Regex]::IsMatch('$(DlGrepVersion)', '^\d+\.\d+$'))">0.0</DlGrepVersion>
+    <DlGrepNumeric>$([System.Text.RegularExpressions.Regex]::Replace('$(DlGrepVersion)', '\.0+(\d)', '.$1'))</DlGrepNumeric>
+    <Version>$(DlGrepNumeric)</Version>
+    <AssemblyVersion>$(DlGrepNumeric).0.0</AssemblyVersion>
+    <FileVersion>$(DlGrepNumeric).0.0</FileVersion>
+    <InformationalVersion>$(DlGrepVersion)</InformationalVersion>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
 </Project>

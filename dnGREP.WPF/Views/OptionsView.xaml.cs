@@ -36,8 +36,6 @@ namespace dnGREP.WPF
         public OptionsView()
         {
             InitializeComponent();
-            DiginesisHelpProvider.HelpNamespace = "https://github.com/dnGrep/dnGrep/wiki/";
-            DiginesisHelpProvider.ShowHelp = true;
 
             viewModel.RequestClose += (s, e) => Close();
             DataContext = viewModel;

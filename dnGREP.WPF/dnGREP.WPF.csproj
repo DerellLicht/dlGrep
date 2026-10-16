@@ -4,7 +4,7 @@
     <LangVersion>latest</LangVersion>
     <OutputType>WinExe</OutputType>
     <Platforms>x86;x64;ARM64</Platforms>
-    <AssemblyName>dnGREP</AssemblyName>
+    <AssemblyName>dlGrep</AssemblyName>
     <ApplicationIcon>nGREP.ico</ApplicationIcon>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -12,9 +12,6 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
     <UseWindowsForms>True</UseWindowsForms>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
@@ -47,9 +44,6 @@
   <ItemGroup>
     <Compile Include="..\AssemblyInfoCommon.cs">
       <Link>Properties\AssemblyInfoCommon.cs</Link>
-    </Compile>
-    <Compile Include="..\AssemblyVersionCommon.cs">
-      <Link>Properties\AssemblyVersionCommon.cs</Link>
     </Compile>
     <Content Include="nlog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -271,7 +265,7 @@
     <ValencianFiles Include="$(SolutionDir)\dnGREP.WPF\bin\$(Platform)\$(Configuration)\$(TargetFramework)\ca-ES-valencia\dnGREP.Localization.resources.dll" />
   </ItemGroup>
   <ItemGroup>
-    <SparsePackageFiles Include="$(SolutionDir)\dnGREP.ContextMenu\bin\$(Platform)\$(Configuration)\dnGREP.ContextMenu.dll" />
+    <!-- dlGrep does not build or ship the Explorer context-menu DLL (dnGREP.ContextMenu), so it is not copied; a missing file here failed the Release build -->
     <SparsePackageFiles Include="$(SolutionDir)\dnGREP.WPF\nGrep.ico" />
     <SparsePackageFiles Include="$(SolutionDir)\dnGREP.msix" />
   </ItemGroup>
@@ -297,7 +291,7 @@
     <Copy SourceFiles="@(ValencianFiles)" DestinationFolder="$(SolutionDir)\publish\win-$(Platform)\ca-ES-valencia" />
   </Target>
   <PropertyGroup>
-    <Authors>dnGrep Community Contributors</Authors>
+    <Authors>Derell Licht; based on dnGrep by the dnGrep Community Contributors</Authors>
     <Description>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.</Description>
   </PropertyGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

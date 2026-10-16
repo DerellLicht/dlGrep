@@ -148,18 +148,6 @@ namespace dnGREP.WPF
             p => Close(),
             q => true);
 
-        private RelayCommand? helpCommand;
-        public RelayCommand HelpCommand => helpCommand ??= new RelayCommand(
-            p =>
-            {
-                ProcessStartInfo startInfo = new()
-                {
-                    FileName = @"https://github.com/dnGrep/dnGrep/wiki/Scripting%20Commands",
-                    UseShellExecute = true,
-                };
-                using var proc = Process.Start(startInfo);
-            });
-
         private RelayCommand? undoCommand;
         public RelayCommand UndoCommand => undoCommand ??= new RelayCommand(
             p => textEditor.Undo(),

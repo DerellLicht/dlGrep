@@ -12,7 +12,7 @@
         FlowDirection="{Binding CultureFlowDirection}"
         FontFamily="{Binding ApplicationFontFamily}"
         FontSize="{Binding DialogFontSize}"
-        Icon="/dnGREP;component/nGREP.ico"
+        Icon="/dlGrep;component/nGREP.ico"
         ResizeMode="CanResize"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource Dialog.Background}"

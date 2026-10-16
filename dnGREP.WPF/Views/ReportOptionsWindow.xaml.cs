@@ -17,8 +17,6 @@ namespace dnGREP.WPF
             DataContext = viewModel;
             viewModel.RequestClose += (s, e) => { DialogResult = true; Close(); };
 
-            DiginesisHelpProvider.HelpNamespace = "https://github.com/dnGrep/dnGrep/wiki/";
-            DiginesisHelpProvider.ShowHelp = true;
 
             StateChanged += (s, e) => storedWindowState = WindowState;
             Application.Current.MainWindow.IsVisibleChanged += MainWindow_IsVisibleChanged;

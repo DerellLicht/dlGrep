@@ -73,7 +73,6 @@ namespace dnGREP.WPF
             }
 
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(OpenBookmarksWindowCommand), "Main_Menu_Bookmarks", string.Empty);
-            KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(CheckForUpdatesCommand), "Main_Menu_About_CheckForUpdates", string.Empty);
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(OpenAppDataCommand), "Main_Menu_About_AppData", string.Empty);
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(OpenAppLogsCommand), "Main_Menu_About_AppLogs", string.Empty);
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(AboutCommand), "Main_Menu_About_AboutDnGrep", string.Empty);
@@ -96,6 +95,7 @@ namespace dnGREP.WPF
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(SaveReportCommand), "Main_MoreMenu_Save_Report", string.Empty);
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(SaveTextResultsCommand), "Main_MoreMenu_Save_TextResults", string.Empty);
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(SaveCsvResultsCommand), "Main_MoreMenu_Save_CSVResults", string.Empty);
+            KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(SaveHtmlLogCommand), "Main_MoreMenu_Save_HtmlLog", string.Empty);
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(ReportOptionsCommand), "Main_MoreMenu_Report_Options", string.Empty);
 
             KeyBindingManager.RegisterCommand(KeyCategory.Main, nameof(HighlightsCommand), "Main_HighlightMatches", string.Empty);
@@ -114,6 +114,8 @@ namespace dnGREP.WPF
         public MainViewModel()
             : base()
         {
+            ResultsViewModel.PropertyChanged += ResultsViewModel_PropertyChanged;
+
             if (Application.Current != null)
             {
                 double maxPreviewWidth = Application.Current.MainWindow.Width - DockPanelSplitter.Panel1MinSize;
@@ -135,7 +137,6 @@ namespace dnGREP.WPF
                 ResultsViewModel.OpenFileRequest += SearchResults_OpenFileRequest;
                 ResultsViewModel.SearchResults.CollectionChanged += SearchResults_CollectionChanged;
 
-                CheckVersion();
                 ControlsInit();
                 PopulateTimeIntervals();
                 PopulateEncodings();
@@ -392,6 +393,48 @@ namespace dnGREP.WPF
 
         #region Properties
 
+        // the Results pane is maximized while it holds a replacement log; the previous state is restored after
+        private bool maximizedBeforeLog;
+        private bool logForcedMaximize;
+
+        /// <summary>
+        /// Maximizes the Results pane when a replacement log appears in it (so the log has the whole window
+        /// and the search controls are out of the way), and restores the previous state when the log ends:
+        /// Cancel, a new search, or Undo.
+        /// </summary>
+        private void ResultsViewModel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(GrepSearchResultsViewModel.IsLogDisplayed)) {
+                return;
+            }
+
+            RaiseLogMenuStateChanged();
+
+            if (ResultsViewModel.IsLogDisplayed) {
+                if (!logForcedMaximize) {
+                    maximizedBeforeLog = IsResultTreeMaximized;
+                    logForcedMaximize = true;
+                    IsResultTreeMaximized = true;
+                }
+            }
+            else if (logForcedMaximize) {
+                logForcedMaximize = false;
+                IsResultTreeMaximized = maximizedBeforeLog;
+            }
+        }
+
+        /// <summary>
+        /// Puts the Results pane back to its size from before the log was shown, and stops
+        /// tracking it, so later changes of the log do not touch the user's own maximize choice.
+        /// </summary>
+        private void RestoreMaximizedState()
+        {
+            if (logForcedMaximize) {
+                logForcedMaximize = false;
+                IsResultTreeMaximized = maximizedBeforeLog;
+            }
+        }
+
         public Window? ParentWindow { get; set; }
 
         public MainForm? MainForm => ParentWindow as MainForm;
@@ -640,7 +683,7 @@ namespace dnGREP.WPF
 
             string color = darkColor ? "Dark" : "Light";
             int intValue = (int)value;
-            SwapButtonImagePath = $@"pack://application:,,,/dnGREP;component/Images/swap{color}{intValue}.png";
+            SwapButtonImagePath = $@"pack://application:,,,/dlGrep;component/Images/swap{color}{intValue}.png";
 
             SwapButtonToolTip = value switch
             {
@@ -651,7 +694,7 @@ namespace dnGREP.WPF
         }
 
         [ObservableProperty]
-        private string swapButtonImagePath = $"pack://application:,,,/dnGREP;component/Images/swapLight0.png";
+        private string swapButtonImagePath = $"pack://application:,,,/dlGrep;component/Images/swapLight0.png";
 
         [ObservableProperty]
         private string swapButtonToolTip = string.Empty;
@@ -701,17 +744,9 @@ namespace dnGREP.WPF
             q => true);
 
 
-        private RelayCommand? helpCommand;
-        public RelayCommand HelpCommand => helpCommand ??= new RelayCommand(
-            param => ShowHelp());
-
         private RelayCommand? aboutCommand;
         public RelayCommand AboutCommand => aboutCommand ??= new RelayCommand(
             param => ShowAbout());
-
-        private RelayCommand? checkForUpdatesCommand;
-        public RelayCommand CheckForUpdatesCommand => checkForUpdatesCommand ??= new RelayCommand(
-            param => CheckForUpdates(true));
 
         private RelayCommand? browseFolderCommand;
         public RelayCommand BrowseFolderCommand => browseFolderCommand ??= new RelayCommand(
@@ -793,6 +828,10 @@ namespace dnGREP.WPF
         private RelayCommand? saveCsvResultsCommand;
         public RelayCommand SaveCsvResultsCommand => saveCsvResultsCommand ??= new RelayCommand(
             param => SaveResultsToFile("CSV"));
+
+        private RelayCommand? saveHtmlLogCommand;
+        public RelayCommand SaveHtmlLogCommand => saveHtmlLogCommand ??= new RelayCommand(
+            param => SaveResultsToFile("Html"));
 
         private RelayCommand? reportOptionsCommand;
         public RelayCommand ReportOptionsCommand => reportOptionsCommand ??= new RelayCommand(
@@ -1785,7 +1824,7 @@ namespace dnGREP.WPF
                     OnPropertyChanged(nameof(CurrentGrepOperation));
                     CanSearch = true;
                     ClearMatchCountStatus();
-                    if (ReplaceType != ReplaceType.SelectedFiles)
+                    if (ReplaceType != ReplaceType.SelectedFiles && !ResultsViewModel.IsLogDisplayed)
                     {
                         ResultsViewModel.Clear();
                     }
@@ -2160,17 +2199,68 @@ namespace dnGREP.WPF
                     dlg.ViewModel.SearchOptions = SearchOptions;
                     dlg.ViewModel.SearchFor = SearchFor;
                     dlg.ViewModel.ReplaceWith = ReplaceWith;
+
+                    // owned by the main window, so the two come to the front together
+                    dlg.Owner = ParentWindow;
+
+                    // the replacement log is built live in the Results pane as decisions are made;
+                    // hook up before the results are assigned so the first selection is seen
+                    string statusBeforeLog = StatusMessage;
+                    ResultsViewModel.LogInfo = new ReplaceLogInfo(SearchFor, ReplaceWith, GetSearchOptions(), DateTime.Now);
+                    ReplaceLogSession logSession = new(ResultsViewModel, replaceList, SearchFor, ReplaceWith,
+                        TypeOfSearch, SearchOptions, text => StatusMessage = text);
+                    dlg.ViewModel.ReplaceMatch += logSession.OnReplaceMatch;
+                    dlg.ViewModel.PropertyChanged += logSession.OnViewModelPropertyChanged;
+
+                    // the Results pane becomes the replacement log as soon as the window opens:
+                    // the search results are saved and the pane is emptied; entries follow as
+                    // decisions are made, and Cancel puts the search results back
+                    ResultsViewModel.ShowLog([], SearchFor);
+
                     dlg.ViewModel.SearchResults = replaceList;
                     var result = dlg.ShowDialog();
+
+                    dlg.ViewModel.ReplaceMatch -= logSession.OnReplaceMatch;
+                    dlg.ViewModel.PropertyChanged -= logSession.OnViewModelPropertyChanged;
+
+                    // the Replace window is closed: give the window back its search controls.
+                    // After OK the log stays in the Results pane, at normal size (the maximize
+                    // button still works); after Cancel the search results are restored below
+                    RestoreMaximizedState();
+
                     if (result.HasValue && result.Value)
                     {
                         doReplace = true;
+                        if (ResultsViewModel.LogInfo is ReplaceLogInfo logInfo)
+                        {
+                            ResultsViewModel.LogInfo = logInfo with { Time = DateTime.Now };
+                        }
+                    }
+                    else
+                    {
+                        // Cancel, Escape or closing the window: nothing is written, so
+                        // put back the search results the log replaced, and clear the marks
+                        // so the next Replace starts fresh instead of showing stale decisions
+                        ResultsViewModel.EndLog(true);
+                        StatusMessage = statusBeforeLog;
+                        foreach (GrepSearchResult gsr in replaceList) {
+                            foreach (GrepMatch match in gsr.Matches) {
+                                match.ReplaceMatch = false;
+                            }
+                        }
                     }
                 }
 
                 if (doReplace)
                 {
                     ExecuteReplace(replaceList, true);
+
+                    if (CurrentGrepOperation != GrepOperation.Replace)
+                    {
+                        // nothing was started (for example, every marked file was already replaced),
+                        // so a log would describe changes that were not made
+                        ResultsViewModel.EndLog(true);
+                    }
                 }
             }
             else if (IsScriptRunning)
@@ -2225,7 +2315,15 @@ namespace dnGREP.WPF
                 ClearMatchCountStatus();
                 if (clearAll)
                 {
-                    ResultsViewModel.Clear();
+                    if (ResultsViewModel.IsLogDisplayed)
+                    {
+                        // the replacement log stays in the Results pane
+                        ResultsViewModel.DiscardSavedResults();
+                    }
+                    else
+                    {
+                        ResultsViewModel.Clear();
+                    }
                 }
                 else
                 {
@@ -2346,6 +2444,10 @@ namespace dnGREP.WPF
                         Utils.DeleteUndoFolder();
                         undoList.Clear();
                         needsClearUndo = false;
+
+                        // the files are back as they were, so the log no longer describes them
+                        ResultsViewModel.EndLog(false);
+                        CanSearchInResults = false;
                     }
                     else
                     {
@@ -2642,16 +2744,6 @@ namespace dnGREP.WPF
                 Owner = Application.Current.MainWindow
             };
             keyboardForm.ShowDialog();
-        }
-
-        private static void ShowHelp()
-        {
-            ProcessStartInfo startInfo = new()
-            {
-                FileName = @"https://github.com/dnGrep/dnGrep/wiki",
-                UseShellExecute = true
-            };
-            using var proc = Process.Start(startInfo);
         }
 
         private static void ShowAbout()
@@ -3163,6 +3255,13 @@ namespace dnGREP.WPF
 
         private async void SaveResultsToFile(string? reportType)
         {
+            if (ResultsViewModel.IsLogDisplayed)
+            {
+                // the Results pane shows a replacement log, not search results: save the log
+                await SaveReplaceLogToFile(reportType);
+                return;
+            }
+
             if (FilesFound)
             {
                 SaveFileDialog dlg = new();
@@ -3226,6 +3325,107 @@ namespace dnGREP.WPF
             }
         }
 
+        /// <summary>
+        /// Saves the replacement log that is showing in the Results pane.  "CSV" writes csv,
+        /// "Html" writes an html page, and anything else ("Report", "Text") writes the text report.
+        /// Does nothing if there is no log yet (no decision has been made).
+        /// </summary>
+        /// <param name="reportType">the menu item that was used</param>
+        private async Task SaveReplaceLogToFile(string? reportType)
+        {
+            IReadOnlyList<ReplaceLogFile> log = ResultsViewModel.CurrentLog;
+            ReplaceLogInfo? logInfo = ResultsViewModel.LogInfo;
+            if (log.Count == 0 || logInfo == null)
+            {
+                return;
+            }
+
+            SaveFileDialog dlg = new();
+            switch (reportType)
+            {
+                case "CSV":
+                    dlg.Filter = Resources.Main_ReportOption_CSVFileFormat + "|*.csv";
+                    dlg.DefaultExt = "*.csv";
+                    break;
+                case "Html":
+                    dlg.Filter = Resources.Main_ReportOption_HtmlFileFormat + "|*.html";
+                    dlg.DefaultExt = "*.html";
+                    break;
+                default:
+                    dlg.Filter = Resources.Main_ReportOption_ReportFileFormat + "|*.txt";
+                    dlg.DefaultExt = "*.txt";
+                    break;
+            }
+            dlg.FileName = "replace-log";
+            dlg.InitialDirectory = PathSearchText.BaseFolder;
+
+            var result = dlg.ShowDialog();
+            if (!result.HasValue || !result.Value)
+            {
+                return;
+            }
+
+            // theme colors can only be read on the UI thread
+            ReplaceLogColors colors = GetReplaceLogColors();
+            try
+            {
+                IsSaveInProgress = true;
+                await Task.Run(() =>
+                {
+                    string content = reportType switch
+                    {
+                        "CSV" => ReplaceLogWriter.ToCsv(log),
+                        "Html" => ReplaceLogWriter.ToHtml(log, logInfo, colors),
+                        _ => ReplaceLogWriter.ToText(log, logInfo)
+                    };
+                    File.WriteAllText(dlg.FileName, content, Encoding.UTF8);
+                });
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Error creating replace log file");
+                MessageBox.Show(Resources.MessageBox_ThereWasAnErrorCreatingTheFile + App.LogDir,
+                    Resources.MessageBox_DnGrep,
+                    MessageBoxButton.OK, MessageBoxImage.Error,
+                    MessageBoxResult.OK, TranslationSource.Instance.FlowDirection);
+            }
+            finally
+            {
+                IsSaveInProgress = false;
+            }
+        }
+
+        /// <summary>
+        /// The colors of the replacement log in the Results pane, as the saved html uses them.
+        /// </summary>
+        private static ReplaceLogColors GetReplaceLogColors()
+        {
+            return new ReplaceLogColors(
+                CssColor("PreviewText.Background", "#1e1e1e"), CssColor("PreviewText.Foreground", "#dcdcdc"),
+                CssColor("DiffText.Deleted.Word.Background", "#8a0000"),
+                CssColor("DiffText.Inserted.Word.Background", "#006400"),
+                CssColor("Match.Skip.Background", "#444444"), CssColor("Match.Skip.Foreground", "#ffff00"),
+                "#808080");
+        }
+
+        /// <summary>
+        /// Looks up a theme brush and returns it as a CSS color; the fallback if it is not a solid color brush.
+        /// </summary>
+        private static string CssColor(string resourceKey, string fallback)
+        {
+            if (Application.Current?.TryFindResource(resourceKey) is SolidColorBrush brush)
+            {
+                Color c = brush.Color;
+                if (c.A == 255)
+                {
+                    return $"#{c.R:x2}{c.G:x2}{c.B:x2}";
+                }
+                return string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                    "rgba({0},{1},{2},{3:0.##})", c.R, c.G, c.B, c.A / 255.0);
+            }
+            return fallback;
+        }
+
         private void ProcessCommands(CommandLineArgs args)
         {
             if (!string.IsNullOrWhiteSpace(args.ReportPath))
@@ -3253,7 +3453,9 @@ namespace dnGREP.WPF
             {
                 var hasWritableFiles = ResultsViewModel.GetWritableFilesWithMatches().Any();
 
-                bool enabled = FilesFound && CurrentGrepOperation == GrepOperation.None &&
+                // the Results pane holds a replacement log, not live matches
+                bool enabled = !ResultsViewModel.IsLogDisplayed &&
+                        FilesFound && CurrentGrepOperation == GrepOperation.None &&
                         !IsSaveInProgress && !string.IsNullOrEmpty(SearchFor) &&
                         hasWritableFiles &&
                         // can only replace using the same parameters as was used for the search
@@ -3508,70 +3710,12 @@ namespace dnGREP.WPF
             }
         }
 
-        private static void CheckVersion()
-        {
-            if (Settings.Get<bool>(GrepSettings.Key.EnableUpdateChecking))
-            {
-                DateTime lastCheck = Settings.Get<DateTime>(GrepSettings.Key.LastCheckedVersion);
-                TimeSpan duration = DateTime.Now.Subtract(lastCheck);
-                if (duration.TotalDays >= Settings.Get<int>(GrepSettings.Key.UpdateCheckInterval))
-                {
-                    CheckForUpdates(false);
-                }
-            }
-        }
-
-        private static async void CheckForUpdates(bool fromCommand)
-        {
-            try
-            {
-                PublishedVersionExtractor versionChk = new();
-                string version = await PublishedVersionExtractor.QueryLatestVersion();
-
-                if (!string.IsNullOrEmpty(version))
-                {
-                    string currentVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? string.Empty;
-                    if (PublishedVersionExtractor.IsUpdateNeeded(currentVersion, version))
-                    {
-                        if (MessageBox.Show(TranslationSource.Format(Resources.MessageBox_NewVersionOfDnGREP0IsAvailableForDownload, version) +
-                            Environment.NewLine + Resources.MessageBox_WouldYouLikeToDownloadItNow,
-                            Resources.MessageBox_DnGrep + " " + Resources.MessageBox_NewVersion,
-                            MessageBoxButton.YesNo, MessageBoxImage.Information,
-                            MessageBoxResult.Yes, TranslationSource.Instance.FlowDirection) == MessageBoxResult.Yes)
-                        {
-                            ProcessStartInfo startInfo = new()
-                            {
-                                FileName = "https://github.com/dnGrep/dnGrep/releases/latest",
-                                UseShellExecute = true
-                            };
-                            using var proc = Process.Start(startInfo);
-                        }
-                    }
-                    else if (fromCommand)
-                    {
-                        MessageBox.Show(Resources.MessageBox_DnGrepIsUpToDate,
-                            Resources.MessageBox_DnGrep, MessageBoxButton.OK, MessageBoxImage.Information,
-                            MessageBoxResult.OK, TranslationSource.Instance.FlowDirection);
-                    }
-                }
-
-                Settings.Set(GrepSettings.Key.LastCheckedVersion, DateTime.Now);
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "Failure in check version");
-            }
-        }
-
         private void ControlsInit()
         {
             workerSearchReplace.WorkerReportsProgress = true;
             workerSearchReplace.DoWork += DoSearchReplace;
             workerSearchReplace.RunWorkerCompleted += SearchReplaceCompleted;
             workerSearchReplace.ProgressChanged += SearchProgressChanged;
-
-            DiginesisHelpProvider.HelpNamespace = @"https://github.com/dnGrep/dnGrep/wiki/";
-            DiginesisHelpProvider.ShowHelp = true;
         }
 
         private void PopulateTimeIntervals()

@@ -33,7 +33,7 @@ namespace dnGREP.WPF
 
             if (!cache.TryGetValue(key, out BitmapImage? image))
             {
-                var uriString = $@"pack://application:,,,/dnGREP;component/Images/checks{intValue}.png";
+                var uriString = $@"pack://application:,,,/dlGrep;component/Images/checks{intValue}.png";
                 image = new BitmapImage(new Uri(uriString));
 
                 if (invertColors)

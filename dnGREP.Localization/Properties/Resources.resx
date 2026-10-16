@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About_AboutDnGREP" xml:space="preserve">
-    <value>About dnGrep</value>
+    <value>About dlGrep</value>
     <comment>About dialog window title</comment>
   </data>
   <data name="About_Acknowledgments" xml:space="preserve">
@@ -134,11 +134,11 @@
     <comment>About dnGrep acknowledgments</comment>
   </data>
   <data name="About_DnGREP" xml:space="preserve">
-    <value>dnGrep</value>
+    <value>dlGrep</value>
     <comment>About dialog text</comment>
   </data>
   <data name="About_DnGrepOnGitHub" xml:space="preserve">
-    <value>dnGrep on GitHub</value>
+    <value>dlGrep on GitHub</value>
     <comment>About dialog text</comment>
   </data>
   <data name="About_FileSystemIndexingLocateFilesInstantly" xml:space="preserve">
@@ -533,24 +533,24 @@
     <comment>Help dialog text when running dnGrep from the command-line</comment>
   </data>
   <data name="Help_CmdLineExample1" xml:space="preserve">
-    <value>dnGrep [arguments]
+    <value>dlGrep [arguments]
 Using any combination of arguments from the list below.
 Example:
-dnGrep /f "C:\Program Files\dnGrep" /pm *.txt;*.xml /s t\w*t /st Regex</value>
+dlGrep /f "C:\Program Files\dlGrep" /pm *.txt;*.xml /s t\w*t /st Regex</value>
     <comment>Help dialog text when running dnGrep from the command-line</comment>
   </data>
   <data name="Help_CmdLineExample2" xml:space="preserve">
-    <value>dnGrep [folderPath] [searchFor]
+    <value>dlGrep [folderPath] [searchFor]
 One or two arguments without flags: the first argument is the folder to search, the second the regular expression to search for.
 Example:
-dnGrep "C:\Program Files\dnGrep" t\w*t</value>
+dlGrep "C:\Program Files\dlGrep" t\w*t</value>
     <comment>Help dialog text when running dnGrep from the command-line</comment>
   </data>
   <data name="Help_CmdLineExit" xml:space="preserve">
     <value>/x
 -x
 -exit
-    Exit dnGrep after command-line operations are complete.</value>
+    Exit dlGrep after command-line operations are complete.</value>
     <comment>Help dialog text when running dnGrep from the command-line</comment>
   </data>
   <data name="Help_CmdLineFileInformation" xml:space="preserve">
@@ -568,7 +568,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Help dialog text when running dnGrep from the command-line</comment>
   </data>
   <data name="Help_CmdLineHeader" xml:space="preserve">
-    <value>dnGrep:  Search through text files, Word and Excel documents, PDFs, and archives using text, regular expression, XPath, and phonetic queries.</value>
+    <value>dlGrep:  Search through text files, Word and Excel documents, PDFs, and archives using text, regular expression, XPath, and phonetic queries.</value>
     <comment>Help dialog text when running dnGrep from the command-line</comment>
   </data>
   <data name="Help_CmdLineListItemSeparator" xml:space="preserve">
@@ -692,7 +692,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Help dialog text when running dnGrep from the command-line</comment>
   </data>
   <data name="Help_DnGrepHelp" xml:space="preserve">
-    <value>dnGrep Help</value>
+    <value>dlGrep Help</value>
     <comment>Help dialog window title</comment>
   </data>
   <data name="Help_OK" xml:space="preserve">
@@ -812,7 +812,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Main window, filter files by date label</comment>
   </data>
   <data name="Main_DnGREP_Title" xml:space="preserve">
-    <value>dnGrep</value>
+    <value>dlGrep</value>
     <comment>Main window, title label – near menu bar</comment>
   </data>
   <data name="Main_DockBottom" xml:space="preserve">
@@ -956,7 +956,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Main window, main menu label (accel)</comment>
   </data>
   <data name="Main_Menu_About_AboutDnGrep" xml:space="preserve">
-    <value>_About dnGrep…</value>
+    <value>_About dlGrep…</value>
     <comment>Main window, main menu subitem label (accel)</comment>
   </data>
   <data name="Main_Menu_About_AppData" xml:space="preserve">
@@ -1127,6 +1127,14 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <value>Re_place with:</value>
     <comment>Main window, replace text input box label (accel)</comment>
   </data>
+  <data name="Main_ReportOption_HtmlFileFormat" xml:space="preserve">
+    <value>HTML page</value>
+    <comment>Main window, save replace log, html format label</comment>
+  </data>
+  <data name="Main_MoreMenu_Save_HtmlLog" xml:space="preserve">
+    <value>Replace log as HTML</value>
+    <comment>Main window, More button menu item label, shown only while a replace log is displayed</comment>
+  </data>
   <data name="Main_ReportOption_CSVFileFormat" xml:space="preserve">
     <value>CSV (comma separated)</value>
     <comment>Main window, save report, report type format label</comment>
@@ -1170,6 +1178,26 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
   <data name="Main_ResultList_CountMatchesOnLines" xml:space="preserve">
     <value>{0} ({1} matches on {2} lines)</value>
     <comment>Main window, search results text: {0} is the partial path and file name; {1} is the number of matches in the file; {2} is the number of lines with matches</comment>
+  </data>
+  <data name="Main_ReplaceLog_CountReplacements" xml:space="preserve">
+    <value>{0} replaced</value>
+    <comment>Main window, replacement log file header (kept short so it fits the column): {0} is the number of replacements in the file</comment>
+  </data>
+  <data name="Main_ReplaceLog_CountReplacementsSkipped" xml:space="preserve">
+    <value>{0} replaced, {1} skipped</value>
+    <comment>Main window, replacement log file header (kept short so it fits the column): {0} is the number of replacements in the file; {1} is the number of matches left alone</comment>
+  </data>
+  <data name="Main_ReplaceLog_StatusSummary" xml:space="preserve">
+    <value>Replace log: {0} replacements, {1} skipped, on {2} lines in {3} files</value>
+    <comment>Main window status bar while the replacement log is shown: {0} is the number of replacements; {1} is the number of matches left alone; {2} is the number of lines shown; {3} is the number of files</comment>
+  </data>
+  <data name="Main_ReplaceLog_Title" xml:space="preserve">
+    <value>Replace Log</value>
+    <comment>Main window: title shown above the results while the Results pane holds a replacement log</comment>
+  </data>
+  <data name="Main_ReplaceLog_ReplacementSkipped" xml:space="preserve">
+    <value>replacement skipped</value>
+    <comment>Main window, replacement log: shown under a line whose matches were not replaced</comment>
   </data>
   <data name="Main_ResultList_MatchToolTip1" xml:space="preserve">
     <value>Match {0}{1}{2}</value>
@@ -1572,7 +1600,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Main window, search option checkbox label (accel)</comment>
   </data>
   <data name="Main_WindowTitle" xml:space="preserve">
-    <value>{0} in "{1}" – dnGrep</value>
+    <value>{0} in "{1}" – dlGrep</value>
     <comment>Main window title: {0} is the current search pattern; {1} is the current search folder</comment>
   </data>
   <data name="Main_WrapText" xml:space="preserve">
@@ -1644,11 +1672,11 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Message box title for: Delete files</comment>
   </data>
   <data name="MessageBox_DnGrep" xml:space="preserve">
-    <value>dnGrep</value>
+    <value>dlGrep</value>
     <comment>Message box title</comment>
   </data>
   <data name="MessageBox_DnGrepIsUpToDate" xml:space="preserve">
-    <value>dnGrep is up to date.</value>
+    <value>dlGrep is up to date.</value>
     <comment>Message box text for: Check for updates response</comment>
   </data>
   <data name="MessageBox_DoNotAskAgain" xml:space="preserve">
@@ -1696,7 +1724,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Message box title for: New dnGrep version</comment>
   </data>
   <data name="MessageBox_NewVersionOfDnGREP0IsAvailableForDownload" xml:space="preserve">
-    <value>New version of dnGrep ({0}) is available for download.</value>
+    <value>New version of dlGrep ({0}) is available for download.</value>
     <comment>Message box text for: New dnGrep version: {0} is the new version number</comment>
   </data>
   <data name="MessageBox_No" xml:space="preserve">
@@ -1740,11 +1768,11 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Message box text for: Load language resource file error: {0} is the name of the file that failed to load</comment>
   </data>
   <data name="MessageBox_RunDnGrepAsAdministrator" xml:space="preserve">
-    <value>Run dnGrep as Administrator to change showing dnGrep in Windows Explorer right-click menu</value>
+    <value>Run dlGrep as Administrator to change showing dlGrep in Windows Explorer right-click menu</value>
     <comment>Message box text for: Options dialog, changing Windows integration options</comment>
   </data>
   <data name="MessageBox_RunDnGrepAsAdministratorToChangeStartupRegister" xml:space="preserve">
-    <value>Run dnGrep as Administrator to change application startup option.</value>
+    <value>Run dlGrep as Administrator to change application startup option.</value>
     <comment>Message box text for: Options dialog, changing Windows integration options</comment>
   </data>
   <data name="MessageBox_Scripts_HasUnsavedChangesSaveNow" xml:space="preserve">
@@ -1776,7 +1804,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Message box text for: Main window replace warning</comment>
   </data>
   <data name="MessageBox_SomethingBrokeDownInDnGrep" xml:space="preserve">
-    <value>Something broke down in dnGrep. Check the error log for details: </value>
+    <value>Something broke down in dlGrep. Check the error log for details: </value>
     <comment>Message box text for: Unknown error</comment>
   </data>
   <data name="MessageBox_TheFile0AlreadyExistsIn1OverwriteExisting" xml:space="preserve">
@@ -1792,7 +1820,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Message box text for: plug-in load errors</comment>
   </data>
   <data name="MessageBox_ThereWasAnErrorAddingDnGrepToExplorerRightClickMenu" xml:space="preserve">
-    <value>Could not add dnGrep to the Windows Explorer right-click menu. Check the error log for details: </value>
+    <value>Could not add dlGrep to the Windows Explorer right-click menu. Check the error log for details: </value>
     <comment>Message box text for: set Explorer context menu error</comment>
   </data>
   <data name="MessageBox_ThereWasAnErrorCopyingFiles" xml:space="preserve">
@@ -1816,7 +1844,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Message box text for: set startup option error</comment>
   </data>
   <data name="MessageBox_ThereWasAnErrorRemovingDnGrepFromTheExplorerRightClickMenu" xml:space="preserve">
-    <value>Could not remove dnGrep from the Windows Explorer right-click menu. Check the error log for details: </value>
+    <value>Could not remove dlGrep from the Windows Explorer right-click menu. Check the error log for details: </value>
     <comment>Message box text for: unset Explorer context menu error</comment>
   </data>
   <data name="MessageBox_ThereWasAnErrorRevertingFiles" xml:space="preserve">
@@ -1972,7 +2000,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Options dialog, font size selector label</comment>
   </data>
   <data name="Options_DnGrepWillAddTheSelectedFiles" xml:space="preserve">
-    <value>dnGrep will add the selected files to the end of the command-line.</value>
+    <value>dlGrep will add the selected files to the end of the command-line.</value>
     <comment>Options dialog, compare arguments help text</comment>
   </data>
   <data name="Options_EditorArguments" xml:space="preserve">
@@ -1988,7 +2016,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Options dialog, check for updates, checkbox label (accel)</comment>
   </data>
   <data name="Options_EnablesStartingDnGrepFromTheWindowsExplorerRightClickContextMenu" xml:space="preserve">
-    <value>Enables starting dnGrep from the Windows Explorer right-click context menu.</value>
+    <value>Enables starting dlGrep from the Windows Explorer right-click context menu.</value>
     <comment>Options dialog, explorer right-click menu checkbox tooltip</comment>
   </data>
   <data name="Options_FilesAndIndividualMatches" xml:space="preserve">
@@ -2008,7 +2036,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Options dialog, font selector label</comment>
   </data>
   <data name="Options_HelpTranslateDnGrep" xml:space="preserve">
-    <value>Help translate dnGrep.</value>
+    <value>Help translate dlGrep.</value>
     <comment>Options dialog, language request label</comment>
   </data>
   <data name="Options_HexSearchResultLineLength" xml:space="preserve">
@@ -2236,7 +2264,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Options dialog, delete option label (accel)</comment>
   </data>
   <data name="Options_ShowDnGrepInExplorerRightClickMenu" xml:space="preserve">
-    <value>Show dnGrep in the right-click menu of Windows Explorer</value>
+    <value>Show dlGrep in the right-click menu of Windows Explorer</value>
     <comment>Options dialog, startup options, checkbox label (accel)</comment>
   </data>
   <data name="Options_ShowFileInfoToolTips" xml:space="preserve">
@@ -2280,7 +2308,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Options dialog, regular expression options timeout input label</comment>
   </data>
   <data name="Options_ToChangeThisSettingRunDnGREPAsAdministrator" xml:space="preserve">
-    <value>Run dnGrep as Administrator to change this setting.</value>
+    <value>Run dlGrep as Administrator to change this setting.</value>
     <comment>Options dialog, Explorer right-click tooltip</comment>
   </data>
   <data name="Options_UseDefault" xml:space="preserve">
@@ -2427,9 +2455,21 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <value>Move to the previous match in this file</value>
     <comment>Replace window, Previous button tooltip</comment>
   </data>
+  <data name="Replace_LastMatchReached" xml:space="preserve">
+    <value>Last match reached: click OK to apply</value>
+    <comment>Replace window, shown after the last match has been replaced or skipped</comment>
+  </data>
+  <data name="Replace_Continue" xml:space="preserve">
+    <value>_Continue</value>
+    <comment>Replace window, Continue button label (accel): replaces the current match and all the matches after it, then closes the window</comment>
+  </data>
+  <data name="Replace_ContinueToolTip" xml:space="preserve">
+    <value>Replace the current match and every match after it, in this file and all later files, then apply. Matches you already replaced or skipped are left as they are.</value>
+    <comment>Replace window, Continue button tooltip</comment>
+  </data>
   <data name="Replace_Next" xml:space="preserve">
-    <value>_Next</value>
-    <comment>Replace window, Next button label (accel)</comment>
+    <value>_Skip</value>
+    <comment>Replace window, Skip button label (accel): leaves the current match unchanged and moves to the next match</comment>
   </data>
   <data name="Replace_NextFile" xml:space="preserve">
     <value>Next _file</value>
@@ -2552,7 +2592,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Report, CSV report - these are the column headers in the generated CSV file</comment>
   </data>
   <data name="Report_DnGrepSearchResults" xml:space="preserve">
-    <value>dnGrep Search Results</value>
+    <value>dlGrep Search Results</value>
     <comment>Report content text</comment>
   </data>
   <data name="Report_FileNotFoundHasItBeenDeletedOrMoved" xml:space="preserve">
@@ -2940,7 +2980,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Script editor command tooltip</comment>
   </data>
   <data name="ScriptHint_exit" xml:space="preserve">
-    <value>Close all the windows and exit dnGrep</value>
+    <value>Close all the windows and exit dlGrep</value>
     <comment>Script editor command tooltip</comment>
   </data>
   <data name="ScriptHint_expandfilefilters" xml:space="preserve">
@@ -3796,7 +3836,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Options dialog, check box label</comment>
   </data>
   <data name="Error_FilesCouldNotBeSearched" xml:space="preserve">
-    <value>{0} files could not be searched due to permissions, locks, or errors: see dnGrep log file for details</value>
+    <value>{0} files could not be searched due to permissions, locks, or errors: see dlGrep log file for details</value>
     <comment>Main window tooltip. {0} is the count of file read errors</comment>
   </data>
   <data name="Error_ThisPDFFileContainsNoText" xml:space="preserve">
@@ -4020,7 +4060,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Options dialog, startup options checkbox label</comment>
   </data>
   <data name="ShellMenu_SearchWithDnGrep" xml:space="preserve">
-    <value>Search with dnGrep</value>
+    <value>Search with dlGrep</value>
     <comment>Text shown on Windows shell context menu, and Options dialog, startup options checkbox label</comment>
   </data>
   <data name="Options_RequiresWindows11" xml:space="preserve">
@@ -4195,7 +4235,7 @@ dnGrep "C:\Program Files\dnGrep" t\w*t</value>
     <comment>Options dialog, checkbox label</comment>
   </data>
   <data name="Options_KeyboardShortcutToRestoreWindow" xml:space="preserve">
-    <value>Keyboard shortcut to restore dnGrep window</value>
+    <value>Keyboard shortcut to restore dlGrep window</value>
     <comment>Options dialog, keyboard shortcut input label</comment>
   </data>
   <data name="NotiyIcon_Menu_Open" xml:space="preserve">

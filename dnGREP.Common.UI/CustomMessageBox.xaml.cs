@@ -464,7 +464,7 @@ namespace dnGREP.Common.UI
         /// <example>
         /// var bitmapImage = new System.Windows.Media.Imaging.BitmapImage();
         /// bitmapImage.BeginInit();
-        /// bitmapImage.UriSource = new Uri("pack://application:,,,/dnGrep;component/images/dnGrep48.png");
+        /// bitmapImage.UriSource = new Uri("pack://application:,,,/dlGrep;component/images/dnGrep48.png");
         /// bitmapImage.EndInit();
         /// var customs = new MessageBoxCustoms() { Icon = bitmapImage };
         /// </example>

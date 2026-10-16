@@ -14,14 +14,11 @@
                  FlowDirection="{Binding CultureFlowDirection}"
                  FontFamily="{Binding ApplicationFontFamily}"
                  FontSize="{Binding DialogFontSize}"
-                 my:DiginesisHelpProvider.HelpKeyword="StringMap"
-                 my:DiginesisHelpProvider.HelpNavigator="Topic"
-                 my:DiginesisHelpProvider.ShowHelp="True"
                  ResizeMode="CanResize"
                  my:ChromeButtonExtension.ButtonVisibility="MinimizeHidden"
                  Background="{DynamicResource Dialog.Background}"
                  CaptionBackground="{DynamicResource Caption.Dialog.Background}"
-                 Icon="/dnGREP;component/nGREP.ico"
+                 Icon="/dlGrep;component/nGREP.ico"
                  WindowStartupLocation="CenterOwner"
                  my:InputBindingsBehavior.InputBindings="{Binding InputBindings}">
     <Window.Resources>

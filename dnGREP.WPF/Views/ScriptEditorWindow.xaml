@@ -13,15 +13,12 @@
                  FontSize="{Binding MainFormFontSize}"
                  Height="740"
                  Width="700"
-                 Icon="/dnGREP;component/nGREP.ico"
+                 Icon="/dlGrep;component/nGREP.ico"
                  ResizeMode="CanResize"
                  WindowStartupLocation="CenterOwner"
                  FocusManager.FocusedElement="{Binding ElementName=textEditor}"
                  Background="{DynamicResource Dialog.Background}"
-                 CaptionBackground="{DynamicResource Caption.Dialog.Background}" 
-                 my:DiginesisHelpProvider.HelpKeyword="Scripting Commands"
-                 my:DiginesisHelpProvider.HelpNavigator="Topic"
-                 my:DiginesisHelpProvider.ShowHelp="True"
+                 CaptionBackground="{DynamicResource Caption.Dialog.Background}"
                  my:InputBindingsBehavior.InputBindings="{Binding InputBindings}">
 
     <Window.Resources>
@@ -64,9 +61,6 @@
             <MenuItem Header="{l:Loc Key='Script_Editor_Tools'}">
                 <MenuItem Header="{l:Loc Key='Script_Editor_Validate'}" Command="{Binding ValidateCommand}" InputGestureText="{Binding ValidateCommand.KeyGestureText}"/>
                 <MenuItem Header="{l:Loc Key='Script_Editor_RunScript'}" Command="{Binding RunCommand}" InputGestureText="{Binding RunCommand.KeyGestureText}"/>
-            </MenuItem>
-            <MenuItem Header="{l:Loc Key='Script_Editor_Help'}">
-                <MenuItem Header="{l:Loc Key='Script_Editor_ScriptingCommands'}" Command="{Binding HelpCommand}" InputGestureText="F1"/>
             </MenuItem>
         </Menu>
 

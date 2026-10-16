@@ -77,16 +77,16 @@ const
   // (for example "10.0.1"), in the 64-bit registry view.
   DesktopRuntimeKey = 'SOFTWARE\dotnet\Setup\InstalledVersions\x64\sharedfx\Microsoft.WindowsDesktop.App';
 
-// True if a .NET Desktop Runtime whose major version is at least MinMajor is installed.
-// Reads the version names under DesktopRuntimeKey and compares the number before the first dot,
-// so "10.0.1" and "10.0.0-rc.2" both count as 10.
-function DesktopRuntimeInstalled(MinMajor: Integer): Boolean;
+// True if the registry view RootKey holds a .NET Desktop Runtime whose major version is at least
+// MinMajor.  Reads the version names under DesktopRuntimeKey and compares the number before the
+// first dot, so "10.0.1" and "10.0.0-rc.2" both count as 10.
+function DesktopRuntimeInView(RootKey: Integer; MinMajor: Integer): Boolean;
 var
   Names: TArrayOfString;
   I, DotPos, Major: Integer;
 begin
   Result := False;
-  if not RegGetValueNames(HKLM, DesktopRuntimeKey, Names) then begin
+  if not RegGetValueNames(RootKey, DesktopRuntimeKey, Names) then begin
     Exit;
   end;
   for I := 0 to GetArrayLength(Names) - 1 do begin
@@ -99,6 +99,14 @@ begin
       end;
     end;
   end;
+end;
+
+// True if a .NET Desktop Runtime of at least major version MinMajor is installed.  The .NET
+// installer records its versions in the 32-bit registry view (same quirk as the WebView2 check in
+// the PrettyReMark installer), while this installer runs in 64-bit mode, so look in both views.
+function DesktopRuntimeInstalled(MinMajor: Integer): Boolean;
+begin
+  Result := DesktopRuntimeInView(HKLM32, MinMajor) or DesktopRuntimeInView(HKLM64, MinMajor);
 end;
 
 // Warns before installing if the .NET 10 Desktop Runtime is missing, because dlGrep will not
